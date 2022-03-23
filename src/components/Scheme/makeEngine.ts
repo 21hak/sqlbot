@@ -5,6 +5,7 @@ import createEngine, {
   PathFindingLinkFactory,
   PortModelAlignment,
 } from "@projectstorm/react-diagrams";
+import createTables from "../../lib/createTables";
 import { ArrowLinkFactory } from "../Link/ArrowLinkFactory";
 import { TablePortFactory } from "../Port/TablePortFactory";
 import { TablePortModel } from "../Port/TablePortModel";
@@ -30,40 +31,38 @@ export default function makeEngine(dbScheme: DBScheme) {
     .getFactory<PathFindingLinkFactory>(PathFindingLinkFactory.NAME);
 
   const model = new DiagramModel();
-  const nodes = dbScheme.map((table) => new TableNodeModel(table));
+  const tables = createTables(dbScheme);
+
+  const nodes = tables.map((table) => new TableNodeModel(table));
   nodes.forEach((node, index) => {
-    const pos = getPosition(index);
-    node.setPosition(pos[0], pos[1]);
+    const [x, y] = getPosition(index);
+    node.setPosition(x, y);
+  });
+  const relations = dbScheme.foreignKeys.map(([f1, f2], index) => {
+    let to;
+    let from;
+    if (dbScheme.primaryKeys.includes(f1)) {
+      to = dbScheme.columnNamesOriginal[f1][0];
+      from = dbScheme.columnNamesOriginal[f2][0];
+    } else {
+      to = dbScheme.columnNamesOriginal[f2][0];
+      from = dbScheme.columnNamesOriginal[f1][0];
+    }
+    return [to, from];
+  });
+  const links = relations.map(([to, from]) => {
+    const portTo = nodes[to].getPort(
+      PortModelAlignment.RIGHT!
+    )! as TablePortModel;
+    const portFrom = nodes[from].getPort(
+      PortModelAlignment.RIGHT!
+    )! as TablePortModel;
+    const link = portFrom.link(portTo, pathfinding);
+    return link;
   });
 
-  const port1 = nodes[0].getPort(PortModelAlignment.RIGHT!)! as TablePortModel;
-  const port2 = nodes[3].getPort(PortModelAlignment.RIGHT!) as TablePortModel;
-  const link1 = port1.link(port2, pathfinding);
-  //   const port = node2.getPort(PortModelAlignment.RIGHT) as TablePortModel;
-  //   const link2 = port.link(port3);
-  // var link2 = port3.link(node2.getPort(PortModelAlignment.RIGHT)!);
-  //   //3-A) create a default node
-  //   var node1 = new DefaultNodeModel("Node 1", "rgb(0,192,255)");
-  //   var port1 = node1.addOutPort("Out");
-  //   node1.setPosition(100, 200);
-
-  //   //3-B) create our new custom node
-  //   var node2 = new TableNodeModel();
-  //   node2.setPosition(250, 108);
-
-  //   var node3 = new DefaultNodeModel("Node 3", "red");
-  //   var port3 = node3.addInPort("In");
-  //   node3.setPosition(500, 100);
-
-  //   //3-C) link the 2 nodes together
-  //   var link1 = port1.link(node2.getPort(PortModelAlignment.LEFT)!);
-  //   const port = node2.getPort(PortModelAlignment.RIGHT) as TablePortModel;
-  //   const link2 = port.link(port3);
-  // var link2 = port3.link(node2.getPort(PortModelAlignment.RIGHT)!);
-
-  //4) add the models to the root graph
-  model.addAll(...nodes, link1);
-  model.serialize()
+  model.addAll(...nodes, ...links);
+  model.serialize();
   // return model;
 
   engine.setModel(model);

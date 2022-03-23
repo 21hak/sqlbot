@@ -17,7 +17,11 @@ export namespace S {
   `;
   export const TableColumn = styled.div`
     display: flex;
+    justify-content: space-between;
+    align-items: center;
   `;
+  export const ColumnName = styled.span``;
+  export const ColumnType = styled.span``;
 }
 
 // export default S;

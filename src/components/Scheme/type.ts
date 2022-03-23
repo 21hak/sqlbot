@@ -5,18 +5,18 @@ export type RawTableData = Array<{
   db_id: string;
   foreign_keys: number[];
   primary_keys: number[];
-  table_names: number[];
-  table_names_original: number[];
+  table_names: string[];
+  table_names_original: string[];
 }>;
-export type TableScheme = {
+export type DBScheme = {
   columnNames: Array<[number, string]>;
   columnNamesOriginal: Array<[number, string]>;
   columnTypes: string[];
   dbId: string;
-  foreignKeys: number[];
+  foreignKeys: Array<[number, number]>;
   primaryKeys: number[];
-  tableNames: number[];
-  tableNamesOriginal: number[];
+  tableNames: string[];
+  tableNamesOriginal: string[];
 };
 
-export type DBScheme = Array<TableScheme>;
+// export type DBScheme = Array<TableScheme>;

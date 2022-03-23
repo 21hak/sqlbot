@@ -16,14 +16,17 @@ export interface TableNodeWidgetProps {
 }
 
 export const TableNodeWidget: FC<TableNodeWidgetProps> = function (props) {
-  const { dbId, columnNames } = props.node.scheme;
+  const { name, columns } = props.node.table;
 
   return (
-    <S.TableNodeWidgetWrapper size={100}>
-      <S.TableName>{dbId}</S.TableName>
+    <S.TableNodeWidgetWrapper size={200}>
+      <S.TableName>{name}</S.TableName>
       <S.TableColumns>
-        {columnNames.map(([id, name]) => (
-          <S.TableColumn key={name}>{name}</S.TableColumn>
+        {columns.map(({ name, type }) => (
+          <S.TableColumn key={name}>
+            <S.ColumnName>{name}</S.ColumnName>
+            <S.ColumnType>{type}</S.ColumnType>
+          </S.TableColumn>
         ))}
       </S.TableColumns>
       <PortWidget
@@ -33,9 +36,7 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function (props) {
           position: "absolute",
         }}
         port={props.node.getPort(PortModelAlignment.LEFT)!}
-        engine={props.engine}>
-        {/* <S.Port /> */}
-      </PortWidget>
+        engine={props.engine}></PortWidget>
       <PortWidget
         style={{
           right: 0,
@@ -43,9 +44,7 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function (props) {
           position: "absolute",
         }}
         port={props.node.getPort(PortModelAlignment.RIGHT)!}
-        engine={props.engine}>
-        {/* <S.Port /> */}
-      </PortWidget>
+        engine={props.engine}></PortWidget>
     </S.TableNodeWidgetWrapper>
   );
 };

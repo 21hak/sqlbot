@@ -1,4 +1,4 @@
-import { DBScheme, RawTableData, TableScheme } from "./type";
+import { DBScheme, RawTableData } from "./type";
 
 export default function parseData(rawData: RawTableData): DBScheme {
   return rawData.map((r) => ({
@@ -10,5 +10,5 @@ export default function parseData(rawData: RawTableData): DBScheme {
     primaryKeys: r.primary_keys,
     tableNames: r.table_names,
     tableNamesOriginal: r.table_names_original,
-  }));
+  }))[1];
 }

@@ -21,6 +21,7 @@ const Graph: NextPage = () => {
             ? theme.palette.grey[100]
             : theme.palette.grey[900],
         flexGrow: 1,
+        width: "100%",
         height: "100vh",
         overflow: "auto",
       }}>
