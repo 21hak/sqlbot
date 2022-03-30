@@ -1,0 +1,38 @@
+{
+  "[CLS]": {
+    "full": [],
+    "partial": []
+  },
+  "how": {
+    "full": [],
+    "partial": []
+  },
+  "many": {
+    "full": [],
+    "partial": []
+  },
+  "singers": {
+    "full": ["singer"],
+    "partial": [
+      "singer_in_concert",
+      "singer_in_concert.singer_id",
+      "signer.singer_id"
+    ]
+  },
+  "are": {
+    "full": [],
+    "partial": []
+  },
+  "there": {
+    "full": [],
+    "partial": []
+  },
+  "?": {
+    "full": [],
+    "partial": []
+  },
+  "[SEP]": {
+    "full": [],
+    "partial": []
+  }
+}

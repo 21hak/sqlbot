@@ -8,3 +8,8 @@ export interface TableModel {
   columns: ColumnModel[];
   primaryKey: string;
 }
+
+export interface SchemaLinkModel {
+  full: string[];
+  partial: string[];
+}

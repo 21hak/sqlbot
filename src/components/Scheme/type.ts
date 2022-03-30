@@ -3,7 +3,7 @@ export type RawTableData = Array<{
   column_names_original: Array<[number, string]>;
   column_types: string[];
   db_id: string;
-  foreign_keys: number[];
+  foreign_keys: Array<[number, number]>;
   primary_keys: number[];
   table_names: string[];
   table_names_original: string[];
