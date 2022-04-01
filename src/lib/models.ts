@@ -10,6 +10,7 @@ export interface TableModel {
 }
 
 export interface SchemaLinkModel {
+  word: string;
   full: string[];
   partial: string[];
 }

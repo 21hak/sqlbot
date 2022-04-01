@@ -5,12 +5,12 @@ import createEngine, {
   PathFindingLinkFactory,
   PortModelAlignment,
 } from "@projectstorm/react-diagrams";
-import createTables from "../../lib/createTables";
-import { ArrowLinkFactory } from "../Link/ArrowLinkFactory";
-import { TablePortFactory } from "../Port/TablePortFactory";
-import { TablePortModel } from "../Port/TablePortModel";
-import { TableNodeFactory } from "../TableNode/TableNodeFactory";
-import { TableNodeModel } from "../TableNode/TableNodeModel";
+import createTables from "../../../lib/createTables";
+import { ArrowLinkFactory } from "../../Link/ArrowLinkFactory";
+import { TablePortFactory } from "../../Port/TablePortFactory";
+import { TablePortModel } from "../../Port/TablePortModel";
+import { TableNodeFactory } from "../../TableNode/TableNodeFactory";
+import { TableNodeModel } from "../../TableNode/TableNodeModel";
 import getPosition from "./getPosition";
 import { DBScheme } from "./type";
 

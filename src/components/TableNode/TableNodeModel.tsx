@@ -7,7 +7,7 @@ import {
 } from "@projectstorm/react-diagrams";
 import { TableModel } from "../../lib/models";
 import { TablePortModel } from "../Port/TablePortModel";
-import { DBScheme } from "../Scheme/type";
+import { DBScheme } from "../Scheme/utils/type";
 
 export interface TableNodeModelGenerics {
   PORT: TablePortModel;

@@ -1,4 +1,4 @@
-import { DBScheme } from "../components/Scheme/type";
+import { DBScheme } from "../components/Scheme/utils/type";
 import { ColumnModel, TableModel } from "./models";
 
 export default function createTables(dbScheme: DBScheme): TableModel[] {

@@ -1,10 +1,5 @@
-import createEngine, {
-  DefaultNodeModel,
-  DiagramEngine,
-  DiagramModel,
-  PortModelAlignment,
-} from "@projectstorm/react-diagrams";
-import React, { useEffect, useRef, useState } from "react";
+import { DiagramEngine } from "@projectstorm/react-diagrams";
+import React, { FC, useEffect, useRef, useState } from "react";
 // import the custom models
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
 
@@ -12,17 +7,22 @@ import { DemoCanvasWidget } from "../DemoCanvasWidget";
 
 import tableJson from "../../../public/tables.json";
 
-import TableEngine from "./makeEngine";
-import makeEngine from "./makeEngine";
-import parseData from "./parseData";
+import TableEngine from "./utils/makeEngine";
+import makeEngine from "./utils/makeEngine";
+import parseData from "./utils/parseData";
 import createTables from "../../lib/createTables";
+import dynamic from "next/dynamic";
 
-export default () => {
+interface SchemaProps{
+  
+}
+const Schema: FC = function Schema({}) {
   const [ready, setReady] = useState(false);
   const engine = useRef<DiagramEngine | null>(null);
   useEffect(() => {
     const jsonData = JSON.parse(JSON.stringify(tableJson));
     const rawData = parseData(jsonData);
+
     engine.current = makeEngine(rawData);
     setReady(true);
   }, []);
@@ -32,3 +32,4 @@ export default () => {
     </DemoCanvasWidget>
   );
 };
+export default Schema;

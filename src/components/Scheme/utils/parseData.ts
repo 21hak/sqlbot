@@ -10,5 +10,5 @@ export default function parseData(rawData: RawTableData): DBScheme {
     primaryKeys: r.primary_keys,
     tableNames: r.table_names,
     tableNamesOriginal: r.table_names_original,
-  }))[1];
+  }))[0];
 }

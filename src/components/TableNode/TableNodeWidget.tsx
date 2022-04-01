@@ -8,6 +8,7 @@ import {
 import styled from "@emotion/styled";
 import { S } from "./TableNodeWidget.style";
 import { Sd } from "@mui/icons-material";
+import { Box, Card, CardContent, CardHeader, Typography } from "@mui/material";
 
 export interface TableNodeWidgetProps {
   node: TableNodeModel;
@@ -19,16 +20,29 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function (props) {
   const { name, columns } = props.node.table;
 
   return (
-    <S.TableNodeWidgetWrapper size={200}>
-      <S.TableName>{name}</S.TableName>
-      <S.TableColumns>
-        {columns.map(({ name, type }) => (
-          <S.TableColumn key={name}>
-            <S.ColumnName>{name}</S.ColumnName>
-            <S.ColumnType>{type}</S.ColumnType>
-          </S.TableColumn>
+    <S.StyledCard sx={{ minWidth: 230, position: "relative" }}>
+      <CardHeader title={name.toLocaleLowerCase()} id={`${name}`} />
+      <CardContent sx={{ p: 0 }}>
+        {columns.map(({ name: columnName, type }) => (
+          <div
+            key={`${name.toLocaleLowerCase()}-${columnName.toLocaleLowerCase()}`}
+            id={`${name.toLocaleLowerCase()}-${columnName.toLocaleLowerCase()}`}
+            style={{ margin: 4 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                pr: 1,
+                pl: 1,
+              }}>
+              <Typography sx={{ fontSize: 14 }}>{columnName}</Typography>
+              <Typography sx={{ fontSize: 14 }} color="text.secondary">
+                {type}
+              </Typography>
+            </Box>
+          </div>
         ))}
-      </S.TableColumns>
+      </CardContent>
       <PortWidget
         style={{
           top: 100 / 2 - 20,
@@ -45,7 +59,34 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function (props) {
         }}
         port={props.node.getPort(PortModelAlignment.RIGHT)!}
         engine={props.engine}></PortWidget>
-    </S.TableNodeWidgetWrapper>
+    </S.StyledCard>
+    // <S.TableNodeWidgetWrapper size={200}>
+    //   <S.TableName>{name}</S.TableName>
+    //   <S.TableColumns>
+    //     {columns.map(({ name, type }) => (
+    //       <S.TableColumn key={name}>
+    //         <S.ColumnName>{name}</S.ColumnName>
+    //         <S.ColumnType>{type}</S.ColumnType>
+    //       </S.TableColumn>
+    //     ))}
+    //   </S.TableColumns>
+    //   <PortWidget
+    //     style={{
+    //       top: 100 / 2 - 20,
+    //       left: 0,
+    //       position: "absolute",
+    //     }}
+    //     port={props.node.getPort(PortModelAlignment.LEFT)!}
+    //     engine={props.engine}></PortWidget>
+    //   <PortWidget
+    //     style={{
+    //       right: 0,
+    //       top: props.size / 2 - 8,
+    //       position: "absolute",
+    //     }}
+    //     port={props.node.getPort(PortModelAlignment.RIGHT)!}
+    //     engine={props.engine}></PortWidget>
+    // </S.TableNodeWidgetWrapper>
   );
 };
 // export class TableNodeWidget extends React.Component<TableNodeWidgetProps> {

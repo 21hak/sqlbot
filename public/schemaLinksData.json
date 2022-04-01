@@ -16,7 +16,7 @@
     "partial": [
       "singer_in_concert",
       "singer_in_concert.singer_id",
-      "signer.singer_id"
+      "singer.singer_id"
     ]
   },
   "are": {
