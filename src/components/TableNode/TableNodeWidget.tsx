@@ -13,7 +13,9 @@ import {
   PortWidget,
 } from "@projectstorm/react-diagrams";
 import React, { FC, useState } from "react";
+import { useRecoilValue } from "recoil";
 import getColors from "../../lib/getColor";
+import { attentionWeightState, schemaLinkState } from "../Scheme/atoms";
 import { TableNodeModel } from "./TableNodeModel";
 import { S } from "./TableNodeWidget.style";
 
@@ -29,7 +31,9 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function ({
   size,
 }) {
   const { name, columns } = node.table;
-  const { weights, links } = node;
+  const { weights } = node;
+  const attentionWeight = useRecoilValue(attentionWeightState);
+  const schemaLink = useRecoilValue(schemaLinkState);
 
   const [weightVisible, setWeightVisible] = useState(false);
   const handleMouseEnter = () => {
@@ -49,9 +53,9 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function ({
           title={name.toLocaleLowerCase()}
           sx={{
             p: 1,
-            borderStyle: links.full.includes(name.toLocaleLowerCase())
+            borderStyle: schemaLink.full.includes(name.toLocaleLowerCase())
               ? "solid"
-              : links.partial.includes(name.toLocaleLowerCase())
+              : schemaLink.partial.includes(name.toLocaleLowerCase())
               ? "dashed"
               : "none",
           }}
@@ -71,9 +75,9 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function ({
                 weights.find((w) => w.key === columnName.toLocaleLowerCase())
                   ?.weight ?? 1
               ),
-              borderStyle: links.full.includes(columnName.toLocaleLowerCase())
+              borderStyle: schemaLink.full.includes(columnName.toLocaleLowerCase())
                 ? "solid"
-                : links.partial.includes(columnName.toLocaleLowerCase())
+                : schemaLink.partial.includes(columnName.toLocaleLowerCase())
                 ? "dashed"
                 : "none",
             }}>

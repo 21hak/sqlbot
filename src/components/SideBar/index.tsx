@@ -6,7 +6,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import React, { FC, useState } from "react";
+import { useRecoilState } from "recoil";
 import { SchemaLinkModel } from "../../lib/models";
+import { schemaLinkState } from "../Scheme/atoms";
 
 const drawerWidth: number = 240;
 
@@ -52,6 +54,7 @@ const SideBar: FC<SideBarProps> = function SideBar({
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const [schemaLink, setSchemaLink] = useRecoilState(schemaLinkState);
 
   return (
     <Drawer variant="permanent" open={open}>
@@ -68,20 +71,19 @@ const SideBar: FC<SideBarProps> = function SideBar({
       </Toolbar>
       <Divider />
       <List component="nav">
-        {schemaLinks.map((word, i) => {
+        {schemaLinks.map((s, i) => {
           return (
             <ListItemButton
               key={i}
-              // selected={word.word === selected?.word}
-              selected={i === selected}
+              selected={s.word === schemaLink.word}
               onClick={() => {
-                // setSelected(word);
+                setSchemaLink(s);
                 setSelected(i);
               }}>
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary={word.word} />
+              <ListItemText primary={s.word} />
             </ListItemButton>
           );
         })}

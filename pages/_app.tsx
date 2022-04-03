@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import Head from "next/head";
-import { AppProps } from "next/app";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
-
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
+import { AppProps } from "next/app";
+import Head from "next/head";
+import React, { useState } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { RecoilRoot } from "recoil";
 import createEmotionCache from "../src/createEmotionCache";
 import theme from "../src/theme";
 
@@ -23,13 +23,18 @@ export default function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <QueryClientProvider client={queryClient}>
-        <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-        </Head>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <RecoilRoot>
+          <Head>
+            <meta
+              name="viewport"
+              content="initial-scale=1, width=device-width"
+            />
+          </Head>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </RecoilRoot>
       </QueryClientProvider>
     </CacheProvider>
   );

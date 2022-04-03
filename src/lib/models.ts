@@ -17,7 +17,6 @@ export interface SchemaLinkModel {
 
 export interface AttentionWeightModel {
   word: string;
-
   weights: Array<{
     key: string;
     weight: number;

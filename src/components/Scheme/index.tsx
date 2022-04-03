@@ -12,7 +12,7 @@ interface SchemaProps {
 }
 const Schema: FC<SchemaProps> = function Schema({
   attentionWeight,
-  schemaLink,
+  // schemaLink,
 }) {
   const { data } = useDatabaseSchema();
 
@@ -31,27 +31,27 @@ const Schema: FC<SchemaProps> = function Schema({
       });
     }
   }, [attentionWeight, nodes]);
-  
-  useEffect(() => {
-    if (schemaLink && nodes) {
-      nodes.forEach((node) => {
-        node.setLinks({
-          full: schemaLink.full
-            .filter((f) => f.split(".")[0] === node.table.name)
-            .map((f) => {
-              const [table, column] = f.split(".");
-              return column ? column : table;
-            }),
-          partial: schemaLink.partial
-            .filter((p) => p.split(".")[0] === node.table.name)
-            .map((p) => {
-              const [table, column] = p.split(".");
-              return column ? column : table;
-            }),
-        });
-      });
-    }
-  }, [schemaLink, nodes]);
+
+  // useEffect(() => {
+  //   if (schemaLink && nodes) {
+  //     nodes.forEach((node) => {
+  //       node.setLinks({
+  //         full: schemaLink.full
+  //           .filter((f) => f.split(".")[0] === node.table.name)
+  //           .map((f) => {
+  //             const [table, column] = f.split(".");
+  //             return column ? column : table;
+  //           }),
+  //         partial: schemaLink.partial
+  //           .filter((p) => p.split(".")[0] === node.table.name)
+  //           .map((p) => {
+  //             const [table, column] = p.split(".");
+  //             return column ? column : table;
+  //           }),
+  //       });
+  //     });
+  //   }
+  // }, [schemaLink, nodes]);
 
   return (
     <DemoCanvasWidget>
