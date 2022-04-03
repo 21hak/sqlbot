@@ -12,7 +12,14 @@ export interface TableNodeModelGenerics {
 export class TableNodeModel extends DefaultNodeModel {
   table: TableModel;
   weights: Array<{ key: string; weight: number }> = [];
-  test: string = "";
+  links: {
+    full: string[];
+    partial: string[];
+  } = {
+    full: [],
+    partial: [],
+  };
+
   constructor(table: TableModel) {
     super({
       type: "table",
@@ -22,10 +29,10 @@ export class TableNodeModel extends DefaultNodeModel {
     this.addPort(new TablePortModel(PortModelAlignment.RIGHT));
   }
 
-  setTest(v: string) {
-    this.test = v;
-  }
   setWeights(weights: Array<{ key: string; weight: number }>) {
     this.weights = weights;
+  }
+  setLinks({ full, partial }: { full: string[]; partial: string[] }) {
+    this.links = { full, partial };
   }
 }

@@ -21,7 +21,7 @@ const Home: NextPage = () => {
   // >([]);
 
   const [selected, setSelected] = useState<number>();
-  
+
   // useEffect(() => {
   //   setSchemaLinks(parseSchemaLinksData(schemaLinksData));
   // }, []);
@@ -117,6 +117,11 @@ const Home: NextPage = () => {
             attentionWeight={
               attentionWeightsData && selected
                 ? attentionWeightsData[selected]
+                : undefined
+            }
+            schemaLink={
+              schemaLinksData && selected
+                ? schemaLinksData[selected]
                 : undefined
             }
           />
