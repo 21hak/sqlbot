@@ -1,14 +1,20 @@
-import React, { FC } from "react";
-import { TableNodeModel } from "./TableNodeModel";
+import {
+  Box,
+  CardContent,
+  CardHeader,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import {
   DiagramEngine,
   PortModelAlignment,
   PortWidget,
 } from "@projectstorm/react-diagrams";
-import styled from "@emotion/styled";
+import React, { FC, useState } from "react";
+import { TableNodeModel } from "./TableNodeModel";
 import { S } from "./TableNodeWidget.style";
-import { Sd } from "@mui/icons-material";
-import { Box, Card, CardContent, CardHeader, Typography } from "@mui/material";
 
 export interface TableNodeWidgetProps {
   node: TableNodeModel;
@@ -19,9 +25,21 @@ export interface TableNodeWidgetProps {
 export const TableNodeWidget: FC<TableNodeWidgetProps> = function (props) {
   const { name, columns } = props.node.table;
 
+  const [weightVisible, setWeightVisible] = useState(false);
+  const handleMouseEnter = () => {
+    setWeightVisible(true);
+  };
+  const handleMouseLeave = () => {
+    setWeightVisible(false);
+  };
+
   return (
-    <S.StyledCard sx={{ minWidth: 230, position: "relative" }}>
+    <S.StyledCard
+      sx={{ minWidth: 230, position: "relative", overflow: "visible" }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}>
       <Box id={`${name}`} sx={{ m: 1 }}>
+        {/* <CardHeader title={myState} /> */}
         <CardHeader title={name.toLocaleLowerCase()} sx={{ p: 1 }} />
       </Box>
       <CardContent sx={{ p: 1 }}>
@@ -58,96 +76,35 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function (props) {
         }}
         port={props.node.getPort(PortModelAlignment.RIGHT)!}
         engine={props.engine}></PortWidget>
+      <AttenWeightList visible={weightVisible} weights={props.node.weights} />
     </S.StyledCard>
-    // <S.TableNodeWidgetWrapper size={200}>
-    //   <S.TableName>{name}</S.TableName>
-    //   <S.TableColumns>
-    //     {columns.map(({ name, type }) => (
-    //       <S.TableColumn key={name}>
-    //         <S.ColumnName>{name}</S.ColumnName>
-    //         <S.ColumnType>{type}</S.ColumnType>
-    //       </S.TableColumn>
-    //     ))}
-    //   </S.TableColumns>
-    //   <PortWidget
-    //     style={{
-    //       top: 100 / 2 - 20,
-    //       left: 0,
-    //       position: "absolute",
-    //     }}
-    //     port={props.node.getPort(PortModelAlignment.LEFT)!}
-    //     engine={props.engine}></PortWidget>
-    //   <PortWidget
-    //     style={{
-    //       right: 0,
-    //       top: props.size / 2 - 8,
-    //       position: "absolute",
-    //     }}
-    //     port={props.node.getPort(PortModelAlignment.RIGHT)!}
-    //     engine={props.engine}></PortWidget>
-    // </S.TableNodeWidgetWrapper>
   );
 };
-// export class TableNodeWidget extends React.Component<TableNodeWidgetProps> {
-//   render() {
-//     console.log("props", this.props);
-//     return (
-//       <S.TableNodeWidgetWrapper size={props.size}>
-//         {/* <svg
-// 					width={this.props.size}
-// 					height={this.props.size}
-// 					dangerouslySetInnerHTML={{
-// 						__html:
-// 							`
-//           <g id="Layer_1">
-//           </g>
-//           <g id="Layer_2">
-//             <polygon fill="mediumpurple" stroke="${
-// 							this.props.node.isSelected() ? 'white' : '#000000'
-// 						}" stroke-width="3" stroke-miterlimit="10" points="10,` +
-// 							this.props.size / 2 +
-// 							` ` +
-// 							this.props.size / 2 +
-// 							`,10 ` +
-// 							(this.props.size - 10) +
-// 							`,` +
-// 							this.props.size / 2 +
-// 							` ` +
-// 							this.props.size / 2 +
-// 							`,` +
-// 							(this.props.size - 10) +
-// 							` "/>
-//           </g>
-//         `
-// 					}}
-// 				/> */}
-//         <S.TableName>TableName</S.TableName>
-//         <S.TableColumns>
-//           {COLUMNS.map((column) => (
-//             <S.TableColumn key={column}>{column}</S.TableColumn>
-//           ))}
-//         </S.TableColumns>
-//         <PortWidget
-//           style={{
-//             top: this.props.size / 2 - 8,
-//             left: -8,
-//             position: "absolute",
-//           }}
-//           port={this.props.node.getPort(PortModelAlignment.LEFT)!}
-//           engine={this.props.engine}>
-//           {/* <S.Port /> */}
-//         </PortWidget>
-//         <PortWidget
-//           style={{
-//             left: this.props.size - 8,
-//             top: this.props.size / 2 - 8,
-//             position: "absolute",
-//           }}
-//           port={this.props.node.getPort(PortModelAlignment.RIGHT)!}
-//           engine={this.props.engine}>
-//           {/* <S.Port /> */}
-//         </PortWidget>
-//       </S.TableNodeWidgetWrapper>
-//     );
-//   }
-// }
+
+interface AttentionWeightListProps {
+  visible: boolean;
+  weights: Array<{ key: string; weight: number }>;
+}
+const AttenWeightList: FC<AttentionWeightListProps> = function AttenWeightList({
+  visible,
+  weights,
+}) {
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        top: 0,
+        left: "100%",
+        backgroundColor: "white",
+      }}>
+      <List sx={{ display: visible ? "initial" : "none" }} dense>
+        {weights.map((weight) => (
+          <ListItem disablePadding>
+            <ListItemText primary={weight.key} />
+            <ListItemText primary={weight.weight} />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+};

@@ -63,25 +63,7 @@ export default function makeEngine(dbScheme: DBScheme) {
 
   model.addAll(...nodes, ...links);
   model.serialize();
-  // return model;
 
   engine.setModel(model);
-  return engine;
+  return { engine, nodes };
 }
-
-// export default class TableEngine {
-//   engine: DiagramEngine;
-//   constructor() {
-//     this.engine = createEngine();
-//     this.engine
-//       .getPortFactories()
-//       .registerFactory(
-//         new TablePortFactory(
-//           "table",
-//           (config) => new TablePortModel(PortModelAlignment.LEFT)
-//         )
-//       );
-//     this.engine.getLinkFactories().registerFactory(new ArrowLinkFactory());
-//     this.engine.getNodeFactories().registerFactory(new TableNodeFactory());
-//   }
-// }

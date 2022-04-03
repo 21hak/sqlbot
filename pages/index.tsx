@@ -1,98 +1,96 @@
-import React, { useEffect, useState } from "react";
-import type { NextPage } from "next";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import { Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
-import schemaLinksData from "../public/schemaLinksData.json";
-import attentionWeightsData from "../public/attentionWeights.json";
-import parseSchemaLinksData from "../src/lib/parseSchemaLinksData";
-import { Badge, Divider, Drawer, IconButton, Toolbar } from "@mui/material";
+import Container from "@mui/material/Container";
+import type { NextPage } from "next";
+import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
+import { useAttentionWeights, useSchemaLinks } from "../src/apis/hooks";
 import Header from "../src/components/Header";
 import SideBar from "../src/components/SideBar";
-import { AttentionWeightModel, SchemaLinkModel } from "../src/lib/models";
-import dynamic from "next/dynamic";
-import parseAttentionWeightsData from "../src/lib/parseAttentionWeightsData";
-import getColors from "../src/lib/getColor";
 
 const Schema = dynamic(() => import("../src/components/Scheme"), {
   ssr: false,
 });
 
 const Home: NextPage = () => {
-  const [schemaLinks, setSchemaLinks] = useState<Array<SchemaLinkModel>>([]);
-  const [attenWeights, setAttentionWeights] = useState<
-    Array<AttentionWeightModel>
-  >([]);
+  const { data: schemaLinksData } = useSchemaLinks();
+  const { data: attentionWeightsData } = useAttentionWeights();
+  // const [schemaLinks, setSchemaLinks] = useState<Array<SchemaLinkModel>>([]);
+  // const [attenWeights, setAttentionWeights] = useState<
+  //   Array<AttentionWeightModel>
+  // >([]);
 
   const [selected, setSelected] = useState<number>();
+  
+  // useEffect(() => {
+  //   setSchemaLinks(parseSchemaLinksData(schemaLinksData));
+  // }, []);
+  // useEffect(() => {
+  //   setAttentionWeights(parseAttentionWeightsData(attentionWeightsData));
+  // }, []);
   useEffect(() => {
-    setSchemaLinks(parseSchemaLinksData(schemaLinksData));
-  }, []);
-  useEffect(() => {
-    setAttentionWeights(parseAttentionWeightsData(attentionWeightsData));
-  }, []);
-  useEffect(() => {
-    if (selected) {
-      const schemaLink = schemaLinks[selected];
-      schemaLinks.forEach((link) => {
-        link.full.forEach((full) => {
-          const [tableName, columnName] = full.split(".");
-          const domId = columnName ? `${tableName}-${columnName}` : tableName;
-          const $ = document.getElementById(domId);
-          $?.classList.remove("selected--full");
-        });
-        link.partial.forEach((partial) => {
-          const [tableName, columnName] = partial.split(".");
-          const domId = columnName ? `${tableName}-${columnName}` : tableName;
-          const $ = document.getElementById(domId);
-          $?.classList.remove("selected--partial");
-        });
-      });
-      schemaLink.full.forEach((full) => {
-        const [tableName, columnName] = full.split(".");
-        const domId = columnName ? `${tableName}-${columnName}` : tableName;
-        const $ = document.getElementById(domId);
-        $?.classList.add("selected--full");
-      });
-      schemaLink.partial.forEach((partial) => {
-        const [tableName, columnName] = partial.split(".");
-        const domId = columnName ? `${tableName}-${columnName}` : tableName;
-        const $ = document.getElementById(domId);
-        $?.classList.add("selected--partial");
-      });
-    }
+    // if (selected) {
+    //   const schemaLink = schemaLinks[selected];
+    //   schemaLinks.forEach((link) => {
+    //     link.full.forEach((full) => {
+    //       const [tableName, columnName] = full.split(".");
+    //       const domId = columnName ? `${tableName}-${columnName}` : tableName;
+    //       const $ = document.getElementById(domId);
+    //       $?.classList.remove("selected--full");
+    //     });
+    //     link.partial.forEach((partial) => {
+    //       const [tableName, columnName] = partial.split(".");
+    //       const domId = columnName ? `${tableName}-${columnName}` : tableName;
+    //       const $ = document.getElementById(domId);
+    //       $?.classList.remove("selected--partial");
+    //     });
+    //   });
+    //   schemaLink.full.forEach((full) => {
+    //     const [tableName, columnName] = full.split(".");
+    //     const domId = columnName ? `${tableName}-${columnName}` : tableName;
+    //     const $ = document.getElementById(domId);
+    //     $?.classList.add("selected--full");
+    //   });
+    //   schemaLink.partial.forEach((partial) => {
+    //     const [tableName, columnName] = partial.split(".");
+    //     const domId = columnName ? `${tableName}-${columnName}` : tableName;
+    //     const $ = document.getElementById(domId);
+    //     $?.classList.add("selected--partial");
+    //   });
+    // }
   }, [selected]);
 
-  useEffect(() => {
-    attenWeights.forEach(({ weights }) => {
-      Object.entries(weights).forEach(([k, v]) => {
-        const [tableName, columnName] = k.split(".");
-        const domId = columnName ? `${tableName}-${columnName}` : tableName;
-        const $ = document.getElementById(domId);
-        if ($) {
-          $.style.backgroundColor = "#FFFFFF";
-        }
-      });
-    });
-    if (selected) {
-      const weights = attenWeights[selected].weights;
-      if (weights) {
-        Object.entries(weights).forEach(([k, v]) => {
-          const [tableName, columnName] = k.split(".");
-          const domId = columnName ? `${tableName}-${columnName}` : tableName;
-          const $ = document.getElementById(domId);
-          if ($) {
-            $.style.backgroundColor = getColors(v);
-          }
-        });
-      }
-    }
-  }, [selected]);
+  // useEffect(() => {
+  //   attenWeights.forEach(({ weights }) => {
+  //     Object.entries(weights).forEach(([k, v]) => {
+  //       const [tableName, columnName] = k.split(".");
+  //       const domId = columnName ? `${tableName}-${columnName}` : tableName;
+  //       const $ = document.getElementById(domId);
+  //       if ($) {
+  //         $.style.backgroundColor = "#FFFFFF";
+  //       }
+  //     });
+  //   });
+  //   if (selected) {
+  //     const weights = attenWeights[selected].weights;
+  //     if (weights) {
+  //       Object.entries(weights).forEach(([k, v]) => {
+  //         const [tableName, columnName] = k.split(".");
+  //         const domId = columnName ? `${tableName}-${columnName}` : tableName;
+  //         const $ = document.getElementById(domId);
+  //         if ($) {
+  //           $.style.backgroundColor = getColors(v);
+  //         }
+  //       });
+  //     }
+  //   }
+  // }, [selected]);
   return (
     <Box sx={{ display: "flex" }}>
+      {/* TODO: Layout */}
       <Header />
       <SideBar
-        schemaLinks={schemaLinks}
+        schemaLinks={schemaLinksData ?? []}
         setSelected={setSelected}
         selected={selected}
       />
@@ -115,7 +113,13 @@ const Home: NextPage = () => {
             height: "100%",
             overflow: "auto",
           }}>
-          <Schema />
+          <Schema
+            attentionWeight={
+              attentionWeightsData && selected
+                ? attentionWeightsData[selected]
+                : undefined
+            }
+          />
         </Container>
       </Box>
     </Box>

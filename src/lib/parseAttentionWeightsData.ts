@@ -5,7 +5,13 @@ export default function parseAttentionWeightsData(
 ): Array<AttentionWeightModel> {
   return Object.entries(rawData).map(
     ([k, weight]: [k: string, weight: any]) => {
-      return { word: k, weights: weight };
+      return {
+        word: k,
+        weights: Object.entries(weight).map(([k2, v2]: any) => ({
+          key: k2,
+          weight: v2,
+        })),
+      };
     }
   );
 }

@@ -1,34 +1,34 @@
-import { DiagramEngine } from "@projectstorm/react-diagrams";
-import React, { FC, useEffect, useRef, useState } from "react";
 // import the custom models
 import { CanvasWidget } from "@projectstorm/react-canvas-core";
-
+import React, { FC, useEffect, useState } from "react";
+import { useDatabaseSchema } from "../../apis/hooks";
+import { AttentionWeightModel } from "../../lib/models";
 import { DemoCanvasWidget } from "../DemoCanvasWidget";
+import { TableNodeModel } from "../TableNode/TableNodeModel";
+import useEngine from "./utils/useEngine";
 
-import tableJson from "../../../public/tables.json";
-
-import TableEngine from "./utils/makeEngine";
-import makeEngine from "./utils/makeEngine";
-import parseData from "./utils/parseData";
-import createTables from "../../lib/createTables";
-import dynamic from "next/dynamic";
-
-interface SchemaProps{
-  
+interface SchemaProps {
+  attentionWeight?: AttentionWeightModel;
 }
-const Schema: FC = function Schema({}) {
-  const [ready, setReady] = useState(false);
-  const engine = useRef<DiagramEngine | null>(null);
+const Schema: FC<SchemaProps> = function Schema({ attentionWeight }) {
+  const { data } = useDatabaseSchema();
+  const [tableModels, setTableModels] = useState<TableNodeModel[]>([]);
+  const { engine, nodes } = useEngine(data);
   useEffect(() => {
-    const jsonData = JSON.parse(JSON.stringify(tableJson));
-    const rawData = parseData(jsonData);
+    if (attentionWeight && nodes) {
+      nodes.forEach((node) => {
+        node.setWeights(
+          attentionWeight.weights.filter(
+            (w) => w.key.split(".")[0] === node.table.name
+          )
+        );
+      });
+    }
+  }, [attentionWeight, nodes]);
 
-    engine.current = makeEngine(rawData);
-    setReady(true);
-  }, []);
   return (
     <DemoCanvasWidget>
-      {engine.current && ready && <CanvasWidget engine={engine.current} />}
+      {engine && <CanvasWidget engine={engine} />}
     </DemoCanvasWidget>
   );
 };
