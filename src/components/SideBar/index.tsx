@@ -34,8 +34,8 @@ const drawerWidth: number = 240;
 
 interface SideBarProps {
   schemaLinks: Array<SchemaLinkModel>;
-  selected?: SchemaLinkModel;
-  setSelected: (i: SchemaLinkModel) => void;
+  selected?: number;
+  setSelected: (i: number) => void;
 }
 
 const Drawer = styled(MuiDrawer, {
@@ -93,9 +93,11 @@ const SideBar: FC<SideBarProps> = function SideBar({
           return (
             <ListItemButton
               key={i}
-              selected={word.word === selected?.word}
+              // selected={word.word === selected?.word}
+              selected={i === selected}
               onClick={() => {
-                setSelected(word);
+                // setSelected(word);
+                setSelected(i);
               }}>
               <ListItemIcon>
                 <DashboardIcon />

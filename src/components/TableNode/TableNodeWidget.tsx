@@ -21,26 +21,25 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function (props) {
 
   return (
     <S.StyledCard sx={{ minWidth: 230, position: "relative" }}>
-      <CardHeader title={name.toLocaleLowerCase()} id={`${name}`} />
-      <CardContent sx={{ p: 0 }}>
+      <Box id={`${name}`} sx={{ m: 1 }}>
+        <CardHeader title={name.toLocaleLowerCase()} sx={{ p: 1 }} />
+      </Box>
+      <CardContent sx={{ p: 1 }}>
         {columns.map(({ name: columnName, type }) => (
-          <div
-            key={`${name.toLocaleLowerCase()}-${columnName.toLocaleLowerCase()}`}
+          <Box
             id={`${name.toLocaleLowerCase()}-${columnName.toLocaleLowerCase()}`}
-            style={{ margin: 4 }}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                pr: 1,
-                pl: 1,
-              }}>
-              <Typography sx={{ fontSize: 14 }}>{columnName}</Typography>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary">
-                {type}
-              </Typography>
-            </Box>
-          </div>
+            key={`${name.toLocaleLowerCase()}-${columnName.toLocaleLowerCase()}`}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              pr: 1,
+              pl: 1,
+            }}>
+            <Typography sx={{ fontSize: 14 }}>{columnName}</Typography>
+            <Typography sx={{ fontSize: 14 }} color="text.secondary">
+              {type}
+            </Typography>
+          </Box>
         ))}
       </CardContent>
       <PortWidget

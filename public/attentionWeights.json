@@ -1,0 +1,90 @@
+{
+  "[CLS]": {
+    "concert": 0.872525,
+    "concert.concert_id": 0.968804,
+    "concert.concert_name": 0.028531,
+    "concert.theme": 0.375956,
+    "concert.stadium_id": 0.672352,
+    "concert.year": 0.893239,
+    "singer": 0.265177,
+    "singer.singer_id": 0.342966,
+    "singer.name": 0.041225
+  },
+  "how": {
+    "concert": 0.504384,
+    "concert.concert_id": 0.364902,
+    "concert.concert_name": 0.915155,
+    "concert.theme": 0.324129,
+    "concert.stadium_id": 0.468876,
+    "concert.year": 0.741833,
+    "singer": 0.084442,
+    "singer.singer_id": 0.777982,
+    "singer.name": 0.124655
+  },
+  "many": {
+    "concert": 0.441484,
+    "concert.concert_id": 0.486135,
+    "concert.concert_name": 0.548966,
+    "concert.theme": 0.16397,
+    "concert.stadium_id": 0.782975,
+    "concert.year": 0.25479,
+    "singer": 0.904695,
+    "singer.singer_id": 0.59659,
+    "singer.name": 0.232123
+  },
+  "singers": {
+    "concert": 0.441484,
+    "concert.concert_id": 0.486135,
+    "concert.concert_name": 0.548966,
+    "concert.theme": 0.16397,
+    "concert.stadium_id": 0.782975,
+    "concert.year": 0.25479,
+    "singer": 0.904695,
+    "singer.singer_id": 0.59659,
+    "singer.name": 0.232123
+  },
+  "are": {
+    "concert": 0.441484,
+    "concert.concert_id": 0.486135,
+    "concert.concert_name": 0.548966,
+    "concert.theme": 0.16397,
+    "concert.stadium_id": 0.782975,
+    "concert.year": 0.25479,
+    "singer": 0.904695,
+    "singer.singer_id": 0.59659,
+    "singer.name": 0.232123
+  },
+  "there": {
+    "concert": 0.441484,
+    "concert.concert_id": 0.486135,
+    "concert.concert_name": 0.548966,
+    "concert.theme": 0.16397,
+    "concert.stadium_id": 0.782975,
+    "concert.year": 0.25479,
+    "singer": 0.904695,
+    "singer.singer_id": 0.59659,
+    "singer.name": 0.232123
+  },
+  "?": {
+    "concert": 0.441484,
+    "concert.concert_id": 0.486135,
+    "concert.concert_name": 0.548966,
+    "concert.theme": 0.16397,
+    "concert.stadium_id": 0.782975,
+    "concert.year": 0.25479,
+    "singer": 0.904695,
+    "singer.singer_id": 0.59659,
+    "singer.name": 0.232123
+  },
+  "[SEP]": {
+    "concert": 0.441484,
+    "concert.concert_id": 0.486135,
+    "concert.concert_name": 0.548966,
+    "concert.theme": 0.16397,
+    "concert.stadium_id": 0.782975,
+    "concert.year": 0.25479,
+    "singer": 0.904695,
+    "singer.singer_id": 0.59659,
+    "singer.name": 0.232123
+  }
+}

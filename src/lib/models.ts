@@ -14,3 +14,10 @@ export interface SchemaLinkModel {
   full: string[];
   partial: string[];
 }
+
+export interface AttentionWeightModel {
+  word: string;
+  weights: {
+    [key: string]: number;
+  };
+}

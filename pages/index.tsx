@@ -4,12 +4,15 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import schemaLinksData from "../public/schemaLinksData.json";
+import attentionWeightsData from "../public/attentionWeights.json";
 import parseSchemaLinksData from "../src/lib/parseSchemaLinksData";
 import { Badge, Divider, Drawer, IconButton, Toolbar } from "@mui/material";
 import Header from "../src/components/Header";
 import SideBar from "../src/components/SideBar";
-import { SchemaLinkModel } from "../src/lib/models";
+import { AttentionWeightModel, SchemaLinkModel } from "../src/lib/models";
 import dynamic from "next/dynamic";
+import parseAttentionWeightsData from "../src/lib/parseAttentionWeightsData";
+import getColors from "../src/lib/getColor";
 
 const Schema = dynamic(() => import("../src/components/Scheme"), {
   ssr: false,
@@ -17,22 +20,72 @@ const Schema = dynamic(() => import("../src/components/Scheme"), {
 
 const Home: NextPage = () => {
   const [schemaLinks, setSchemaLinks] = useState<Array<SchemaLinkModel>>([]);
-  const [selected, setSelected] = useState<SchemaLinkModel>();
+  const [attenWeights, setAttentionWeights] = useState<
+    Array<AttentionWeightModel>
+  >([]);
+
+  const [selected, setSelected] = useState<number>();
   useEffect(() => {
     setSchemaLinks(parseSchemaLinksData(schemaLinksData));
   }, []);
   useEffect(() => {
+    setAttentionWeights(parseAttentionWeightsData(attentionWeightsData));
+  }, []);
+  useEffect(() => {
     if (selected) {
-      // TODO: 테이블 데이터 받아서 style reset 시켜줘야함
-      selected.full.forEach((full) => {});
-      selected.partial.forEach((partial) => {
-        const [tableName, columnName] = partial.split(".");
-
-        const domId = columnName ? `${tableName}-${columnName}` : tableName;
-        console.log(tableName, columnName);
-        const $ = document.getElementById(domId);
-        $?.classList.add("selected");
+      const schemaLink = schemaLinks[selected];
+      schemaLinks.forEach((link) => {
+        link.full.forEach((full) => {
+          const [tableName, columnName] = full.split(".");
+          const domId = columnName ? `${tableName}-${columnName}` : tableName;
+          const $ = document.getElementById(domId);
+          $?.classList.remove("selected--full");
+        });
+        link.partial.forEach((partial) => {
+          const [tableName, columnName] = partial.split(".");
+          const domId = columnName ? `${tableName}-${columnName}` : tableName;
+          const $ = document.getElementById(domId);
+          $?.classList.remove("selected--partial");
+        });
       });
+      schemaLink.full.forEach((full) => {
+        const [tableName, columnName] = full.split(".");
+        const domId = columnName ? `${tableName}-${columnName}` : tableName;
+        const $ = document.getElementById(domId);
+        $?.classList.add("selected--full");
+      });
+      schemaLink.partial.forEach((partial) => {
+        const [tableName, columnName] = partial.split(".");
+        const domId = columnName ? `${tableName}-${columnName}` : tableName;
+        const $ = document.getElementById(domId);
+        $?.classList.add("selected--partial");
+      });
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    attenWeights.forEach(({ weights }) => {
+      Object.entries(weights).forEach(([k, v]) => {
+        const [tableName, columnName] = k.split(".");
+        const domId = columnName ? `${tableName}-${columnName}` : tableName;
+        const $ = document.getElementById(domId);
+        if ($) {
+          $.style.backgroundColor = "#FFFFFF";
+        }
+      });
+    });
+    if (selected) {
+      const weights = attenWeights[selected].weights;
+      if (weights) {
+        Object.entries(weights).forEach(([k, v]) => {
+          const [tableName, columnName] = k.split(".");
+          const domId = columnName ? `${tableName}-${columnName}` : tableName;
+          const $ = document.getElementById(domId);
+          if ($) {
+            $.style.backgroundColor = getColors(v);
+          }
+        });
+      }
     }
   }, [selected]);
   return (
