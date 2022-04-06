@@ -31,6 +31,7 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
+    "@types/node": "^17.0.23",
     "@types/react": "17.0.40",
     "eslint": "8.11.0",
     "eslint-config-next": "12.1.0",
