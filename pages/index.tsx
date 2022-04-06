@@ -15,12 +15,6 @@ const Schema = dynamic(() => import("../src/components/Scheme"), {
 const Home: NextPage = () => {
   const { data: schemaLinksData } = useSchemaLinks();
   const { data: attentionWeightsData } = useAttentionWeights();
-
-  // const [schemaLinks, setSchemaLinks] = useState<Array<SchemaLinkModel>>([]);
-  // const [attenWeights, setAttentionWeights] = useState<
-  //   Array<AttentionWeightModel>
-  // >([]);
-
   const [selected, setSelected] = useState<number>();
 
   return (
@@ -55,11 +49,6 @@ const Home: NextPage = () => {
             attentionWeight={
               attentionWeightsData && selected
                 ? attentionWeightsData[selected]
-                : undefined
-            }
-            schemaLink={
-              schemaLinksData && selected
-                ? schemaLinksData[selected]
                 : undefined
             }
           />

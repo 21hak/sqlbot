@@ -1,22 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { Button, styled, Toolbar } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
 import MuiToolBar, { ToolbarProps } from "@mui/material/Toolbar";
-import {
-  Badge,
-  Button,
-  Container,
-  Divider,
-  Drawer,
-  IconButton,
-  Menu,
-  MenuItem,
-  styled,
-  Toolbar,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import Typography from "@mui/material/Typography";
+import React, { FC } from "react";
+import BasicMenu from "./Menu";
 
 interface HeaderProps {}
 
@@ -61,7 +49,11 @@ const Header: FC<HeaderProps> = function Header({}) {
           ))}
         </Box>
       </Toolbar>
-      <SubHeader variant="dense" />
+      <SubHeader variant="dense">
+        <BasicMenu />
+        <BasicMenu />
+        <BasicMenu />
+      </SubHeader>
     </AppBar>
   );
 };

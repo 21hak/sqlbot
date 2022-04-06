@@ -15,7 +15,8 @@ import {
 import React, { FC, useState } from "react";
 import { useRecoilValue } from "recoil";
 import getColors from "../../lib/getColor";
-import { attentionWeightState, schemaLinkState } from "../Scheme/atoms";
+import { schemaLinkState } from "../Scheme/atoms";
+import { attentionWeightByTable } from "../Scheme/selectors";
 import { TableNodeModel } from "./TableNodeModel";
 import { S } from "./TableNodeWidget.style";
 
@@ -31,8 +32,7 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function ({
   size,
 }) {
   const { name, columns } = node.table;
-  const { weights } = node;
-  const attentionWeight = useRecoilValue(attentionWeightState);
+  const attentionWeight = useRecoilValue(attentionWeightByTable(name));
   const schemaLink = useRecoilValue(schemaLinkState);
 
   const [weightVisible, setWeightVisible] = useState(false);
@@ -48,7 +48,7 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function ({
       sx={{ minWidth: 230, position: "relative", overflow: "visible", p: 1 }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}>
-      <Box id={`${name}`} sx={{ m: 0 }}>
+      <Box id={`${name}`} sx={{ m: 0, mb: 1 }}>
         <CardHeader
           title={name.toLocaleLowerCase()}
           sx={{
@@ -72,10 +72,13 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function ({
               pr: 1,
               pl: 1,
               backgroundColor: getColors(
-                weights.find((w) => w.key === columnName.toLocaleLowerCase())
-                  ?.weight ?? 1
+                attentionWeight.weights.find(
+                  (w) => w.key === columnName.toLocaleLowerCase()
+                )?.weight ?? 1
               ),
-              borderStyle: schemaLink.full.includes(columnName.toLocaleLowerCase())
+              borderStyle: schemaLink.full.includes(
+                columnName.toLocaleLowerCase()
+              )
                 ? "solid"
                 : schemaLink.partial.includes(columnName.toLocaleLowerCase())
                 ? "dashed"
@@ -106,7 +109,13 @@ export const TableNodeWidget: FC<TableNodeWidgetProps> = function ({
         port={node.getPort(PortModelAlignment.RIGHT)!}
         engine={engine}
       />
-      <AttenWeightList visible={weightVisible} weights={weights} />
+
+      {attentionWeight.weights.length > 0 && (
+        <AttenWeightList
+          visible={weightVisible}
+          weights={attentionWeight.weights}
+        />
+      )}
     </S.StyledCard>
   );
 };
@@ -125,13 +134,34 @@ const AttenWeightList: FC<AttentionWeightListProps> = function AttenWeightList({
         position: "absolute",
         top: 0,
         left: "100%",
-        backgroundColor: "white",
+        backgroundColor: "transparent",
+        display: visible ? "initial" : "none",
+
+        pl: 1,
+        zIndex: 1,
       }}>
-      <List sx={{ display: visible ? "initial" : "none" }} dense>
+      <List
+        sx={{
+          p: 1,
+          backgroundColor: "white",
+          borderRadius: 1,
+          minWidth: 160,
+        }}
+        dense>
         {weights.map((weight, index) => (
-          <ListItem disablePadding key={index}>
-            <ListItemText primary={weight.key} />
-            <ListItemText primary={weight.weight} />
+          <ListItem
+            disablePadding
+            key={index}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}>
+            <ListItemText primary={weight.key} sx={{ pr: 1, m: 0 }} />
+            <ListItemText
+              primary={weight.weight}
+              sx={{ flex: "0 1 auto", m: 0 }}
+            />
           </ListItem>
         ))}
       </List>

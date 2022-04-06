@@ -1,4 +1,4 @@
-const BASE_COLOR = ["FFFFFF", "000000"];
+const BASE_COLOR = ["FFFFFF", "0060ff"];
 
 export default function getColors(ratio: number) {
   const hex = function (x: number) {
