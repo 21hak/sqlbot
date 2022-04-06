@@ -1,9 +1,9 @@
-import { TableNodeWidget } from "./TableNodeWidget";
-import { TableNodeModel } from "./TableNodeModel";
-import * as React from "react";
 import { AbstractReactFactory } from "@projectstorm/react-canvas-core";
 import { DiagramEngine } from "@projectstorm/react-diagrams-core";
-import { DBScheme } from "../Scheme/utils/type";
+import * as React from "react";
+import { TableModel } from "../../lib/models";
+import { TableNodeModel } from "./TableNodeModel";
+import { TableNodeWidget } from "./TableNodeWidget";
 
 export class TableNodeFactory extends AbstractReactFactory<
   TableNodeModel,
@@ -20,6 +20,6 @@ export class TableNodeFactory extends AbstractReactFactory<
   }
 
   generateModel(event: any) {
-    return new TableNodeModel({} as DBScheme);
+    return new TableNodeModel({} as TableModel);
   }
 }
