@@ -5,7 +5,6 @@ import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { useAttentionWeights, useSchemaLinks } from "../src/apis/hooks";
-import Header from "../src/components/Header";
 import SideBar from "../src/components/SideBar";
 
 const Schema = dynamic(() => import("../src/components/Scheme"), {
@@ -20,7 +19,7 @@ const Home: NextPage = () => {
   return (
     <Box sx={{ display: "flex" }}>
       {/* TODO: Layout */}
-      <Header />
+
       <SideBar
         schemaLinks={schemaLinksData ?? []}
         setSelected={setSelected}

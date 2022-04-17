@@ -5,7 +5,7 @@ import { useSetRecoilState } from "recoil";
 import { useDatabaseSchema } from "../../apis/hooks";
 import { AttentionWeightModel } from "../../lib/models";
 import { DemoCanvasWidget } from "../DemoCanvasWidget";
-import { attentionWeightState } from "./atoms";
+import { attentionWeightState } from "../../atoms";
 import useEngine from "./utils/useEngine";
 
 interface SchemaProps {

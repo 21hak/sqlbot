@@ -44,4 +44,16 @@ export interface DatabaseSchemaModel {
   tableNamesOriginal: string[];
 }
 
+export interface CandidateModel {
+  words: string[];
+  synonyms: string[][];
+}
+
+export interface LanguageModelOutputModel {
+  inputTokens: string[];
+  outputTokens: string[];
+  weights1: number[][];
+  weights2: number[][];
+}
+
 // export type DBScheme = Array<TableScheme>;

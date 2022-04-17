@@ -6,6 +6,7 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
+import Header from "../src/components/Header";
 import createEmotionCache from "../src/createEmotionCache";
 import theme from "../src/theme";
 
@@ -32,6 +33,7 @@ export default function MyApp(props: MyAppProps) {
           </Head>
           <ThemeProvider theme={theme}>
             <CssBaseline />
+            <Header />
             <Component {...pageProps} />
           </ThemeProvider>
         </RecoilRoot>

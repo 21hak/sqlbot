@@ -15,8 +15,8 @@ import {
 import React, { FC, useState } from "react";
 import { useRecoilValue } from "recoil";
 import getColors from "../../lib/getColor";
-import { schemaLinkState } from "../Scheme/atoms";
-import { attentionWeightByTable } from "../Scheme/selectors";
+import { schemaLinkState } from "../../atoms";
+import { attentionWeightByTable } from "../../selectors";
 import { TableNodeModel } from "./TableNodeModel";
 import { S } from "./TableNodeWidget.style";
 

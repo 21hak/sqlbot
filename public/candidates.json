@@ -1,0 +1,12 @@
+{
+  "words": ["show", "employees", "who", "are", "aged", "over", "50"],
+  "synonyms": [
+    ["list"],
+    ["laborers", "workers", "staffs", "members"],
+    [],
+    ["is"],
+    [],
+    [],
+    ["20", "30", "40", "60"]
+  ]
+}

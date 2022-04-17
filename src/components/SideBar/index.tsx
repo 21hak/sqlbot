@@ -8,7 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import React, { FC, useState } from "react";
 import { useRecoilState } from "recoil";
 import { SchemaLinkModel } from "../../lib/models";
-import { schemaLinkState } from "../Scheme/atoms";
+import { schemaLinkState } from "../../atoms";
 
 const drawerWidth: number = 240;
 

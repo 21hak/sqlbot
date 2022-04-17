@@ -1,5 +1,5 @@
 import { selectorFamily } from "recoil";
-import { AttentionWeightModel } from "../../lib/models";
+import { AttentionWeightModel } from "./lib/models";
 import { attentionWeightState } from "./atoms";
 
 export const attentionWeightByTable = selectorFamily<
