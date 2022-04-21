@@ -10,22 +10,24 @@ import {
 import React, { FC, useState } from "react";
 import { useRecoilState } from "recoil";
 import { useCandidates } from "../../apis/hooks";
-import { candidateState } from "../../atoms";
+import { candidateState, tokenState } from "../../atoms";
 
 interface CandidatesProps {}
 
 const Candidates: FC<CandidatesProps> = function Candidates({}) {
   const { data } = useCandidates();
+  // const [index, setIndex] = useState<number>();
   const [candidate, setCandidate] = useRecoilState(candidateState);
-  console.log(data);
-  const [index, setIndex] = useState<number>();
-  const handleClickWord = (i: number) => {
-    setIndex(i);
+  const [token, setToken] = useRecoilState(tokenState);
+  const tokenIndex = data?.words.findIndex((w) => w === token);
+
+  const handleClickWord = (t: string) => {
+    setToken(t);
   };
   const handleClickCandidate = (c: string) => {
     setCandidate(c);
   };
-  console.log(candidate);
+
   return (
     <Box>
       {/* Natural Language */}
@@ -35,14 +37,18 @@ const Candidates: FC<CandidatesProps> = function Candidates({}) {
 
       {data && (
         <Paper variant="outlined" sx={{ p: 1 }}>
-          {data.words.map((word, index) => (
+          {data.words.map((word, i) => (
             <Typography
-              key={index}
+              key={i}
               variant="button"
               component="span"
-              sx={{ mr: 1, cursor: "pointer" }}
+              sx={{
+                mr: 1,
+                cursor: "pointer",
+                backgroundColor: token === word ? "red" : "",
+              }}
               onClick={() => {
-                handleClickWord(index);
+                handleClickWord(word);
               }}>
               {word}
             </Typography>
@@ -54,9 +60,9 @@ const Candidates: FC<CandidatesProps> = function Candidates({}) {
       <Typography variant="body1" sx={{ p: 1 }}>
         Possible Replacements
       </Typography>
-      {data && index !== undefined && (
+      {data && tokenIndex !== undefined && tokenIndex > -1 && (
         <List sx={{ width: "200px", bgcolor: "background.paper", p: 0 }}>
-          {data.synonyms[index].map((s, index) => (
+          {data.synonyms[tokenIndex].map((s, index) => (
             <ListItem key={index} sx={{ p: 0 }}>
               <ListItemButton
                 key={index}

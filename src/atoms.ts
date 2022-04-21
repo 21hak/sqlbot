@@ -17,3 +17,8 @@ export const candidateState = atom<string>({
   key: "candidate",
   default: "",
 });
+
+export const tokenState = atom<string>({
+  key: "token",
+  default: "",
+});

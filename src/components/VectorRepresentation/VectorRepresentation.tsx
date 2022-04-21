@@ -1,119 +1,116 @@
 import { Box, List, ListItem, ListItemText } from "@mui/material";
-import React, { FC } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
+import { useRecoilValue } from "recoil";
 import { useLanugageModel } from "../../apis/hooks";
+import { tokenState } from "../../atoms";
+import drawLines from "./drawLines";
+import { Connection } from "./type";
 
 interface VectorRepresentationProps {}
 
 const VectorRepresentation: FC<VectorRepresentationProps> =
   function VectorRepresentation({}) {
     const { data } = useLanugageModel();
+    const token = useRecoilValue(tokenState);
+    const [inputToken, setInputToken] = useState<string>();
+    const [connections, setConnections] = useState<Connection>();
+    const inputRef = useRef<HTMLDivElement>(null);
+    const modelOutputRef = useRef<HTMLDivElement>(null);
+    const rtaOutputRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      if (data) {
+        const inputPos = data.inputTokens.findIndex((t) => t === token);
+        if (inputPos > -1) {
+          setInputToken(data.inputTokens[inputPos]);
+          const weights1 = data.weights1[inputPos];
+
+          const l: any[] = [];
+          weights1.forEach((w, index) => {
+            if (w > 0) {
+              const weights2: number[] = [];
+              data.weights2[index].forEach((w2, index) => {
+                if (w2 > 0) {
+                  weights2.push(index);
+                }
+              });
+              l.push({ pos: index, ratOutputs: { pos: weights2 } });
+            }
+          });
+          setConnections({ pos: inputPos, modelOutputs: [...l] });
+        }
+      }
+    }, [token]);
+    useEffect(() => {
+      if (
+        connections &&
+        inputRef.current &&
+        modelOutputRef.current &&
+        rtaOutputRef.current
+      ) {
+        drawLines({
+          inputContainerElem: inputRef.current,
+          modelOutputContainerElem: modelOutputRef.current,
+          rtaOutputContainerElem: rtaOutputRef.current,
+          connections: connections,
+        });
+      }
+    }, [connections, inputRef.current]);
+
+    // const isVisible = (index: number) => {
+    //   return connections?.modelOutputs?.find((l) => l.pos === index);
+    // };
+    // const isVisible2 = (index: number) => {
+    //   return links?.some((l) => l.weights.includes(index));
+    // };
 
     return data ? (
       <Box sx={{ display: "flex", alignItems: "flex-start", gap: 2 }}>
-        <List
-          sx={{ width: "200px", bgcolor: "background.paper" }}
-          //   subheader={<ListSubheader component="div">Input</ListSubheader>}
-        >
+        <List sx={{ width: "200px", bgcolor: "background.paper" }}>
           <ListItem>
             <ListItemText primary="input" />
           </ListItem>
-          {data.inputTokens.map((token, index) => (
-            <ListItem key={index}>
-              {/* <ListItemButton
+          <div ref={inputRef}>
+            {data.inputTokens.map((token, index) => (
+              <ListItem
                 key={index}
-                sx={{ p: 0 }}
-                selected={s === candidate}
-                onClick={() => {
-                  handleClickCandidate(s);
-                }}> */}
-              <ListItemText primary={token} />
-              {/* </ListItemButton> */}
-            </ListItem>
-          ))}
+                sx={{ backgroundColor: inputToken === token ? "red" : "" }}>
+                <ListItemText primary={token} />
+              </ListItem>
+            ))}
+          </div>
         </List>
         <List sx={{ width: "200px", bgcolor: "background.paper" }}>
           <ListItem>
             <ListItemText primary="Lanugage Model Output" />
           </ListItem>
-          {data.inputTokens.map((token, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={token} />
-            </ListItem>
-          ))}
+          <div ref={modelOutputRef}>
+            {data.inputTokens.map((token, index) => (
+              <ListItem
+                key={index}
+                // sx={{ backgroundColor: isVisible(index) ? "red" : "" }}
+              >
+                <ListItemText primary={token} />
+              </ListItem>
+            ))}
+          </div>
         </List>
 
         <List sx={{ width: "200px", bgcolor: "background.paper" }}>
           <ListItem>
             <ListItemText primary="RAT-Layer Output" />
           </ListItem>
-          {data.outputTokens.map((token, index) => (
-            <ListItem key={index}>
-              {/* <ListItemButton
+          <div ref={rtaOutputRef}>
+            {data.outputTokens.map((token, index) => (
+              <ListItem
                 key={index}
-                sx={{ p: 0 }}
-                selected={s === candidate}
-                onClick={() => {
-                  handleClickCandidate(s);
-                }}> */}
-              <ListItemText primary={token} />
-              {/* </ListItemButton> */}
-            </ListItem>
-          ))}
+                // sx={{ backgroundColor: isVisible2(index) ? "red" : "" }}
+              >
+                <ListItemText primary={token} />
+              </ListItem>
+            ))}
+          </div>
         </List>
-        {/* <TableContainer component={Paper}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ width: "200px" }}>Input</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.inputTokens.map((token, index) => (
-                <TableRow key={index}>
-                  <TableCell component="th" scope="row" sx={{ border: 0 }}>
-                    {token}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer> */}
-        {/* <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Lanugage Model Output</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.inputTokens.map((token, index) => (
-                <TableRow key={index}>
-                  <TableCell component="th" scope="row" sx={{ border: 0 }}>
-                    {token}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer> */}
-        {/* <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>RAT-Layer Output</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.outputTokens.map((token, index) => (
-                <TableRow key={index}>
-                  <TableCell component="th" scope="row" sx={{ border: 0 }}>
-                    {token}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer> */}
       </Box>
     ) : null;
   };
