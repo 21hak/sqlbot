@@ -21,12 +21,21 @@ const Page: NextPage = () => {
         height: "100vh",
         overflow: "auto",
       }}>
-      <Box sx={{ width: "50%", height: "100%", p: 1 }}>
+      <Box sx={{ width: "40%", height: "100%", p: 1 }}>
         <Candidates />
       </Box>
       {/* Representation */}
 
-      <Box sx={{ width: "50%", height: "100%", p: 1 }}>
+      <Box sx={{ width: "60%", height: "100%", p: 1, position: "relative" }}>
+        {/* <div
+          id="test"
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            pointerEvents: "none",
+          }}></div> */}
+        {/* <Box sx={{ width: "100%", height: "100%", position: "absolute" }} /> */}
         <VectorRepresentation />
       </Box>
     </Box>

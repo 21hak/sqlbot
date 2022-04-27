@@ -7,7 +7,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { useRecoilState } from "recoil";
 import { useCandidates } from "../../apis/hooks";
 import { candidateState, tokenState } from "../../atoms";

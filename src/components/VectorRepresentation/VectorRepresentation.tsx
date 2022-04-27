@@ -2,7 +2,7 @@ import { Box, List, ListItem, ListItemText } from "@mui/material";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useLanugageModel } from "../../apis/hooks";
-import { tokenState } from "../../atoms";
+import { candidateState, tokenState } from "../../atoms";
 import drawLines from "./drawLines";
 import { Connection } from "./type";
 
@@ -12,6 +12,7 @@ const VectorRepresentation: FC<VectorRepresentationProps> =
   function VectorRepresentation({}) {
     const { data } = useLanugageModel();
     const token = useRecoilValue(tokenState);
+    const candidate = useRecoilValue(candidateState);
     const [inputToken, setInputToken] = useState<string>();
     const [connections, setConnections] = useState<Connection>();
     const inputRef = useRef<HTMLDivElement>(null);
@@ -20,7 +21,7 @@ const VectorRepresentation: FC<VectorRepresentationProps> =
 
     useEffect(() => {
       if (data) {
-        const inputPos = data.inputTokens.findIndex((t) => t === token);
+        const inputPos = data.inputTokens.findIndex((t) => t === candidate);
         if (inputPos > -1) {
           setInputToken(data.inputTokens[inputPos]);
           const weights1 = data.weights1[inputPos];
@@ -38,9 +39,12 @@ const VectorRepresentation: FC<VectorRepresentationProps> =
             }
           });
           setConnections({ pos: inputPos, modelOutputs: [...l] });
+        } else {
+          setConnections({ pos: -1, modelOutputs: [] });
         }
       }
-    }, [token]);
+    }, [candidate]);
+
     useEffect(() => {
       if (
         connections &&
@@ -57,16 +61,19 @@ const VectorRepresentation: FC<VectorRepresentationProps> =
       }
     }, [connections, inputRef.current]);
 
-    // const isVisible = (index: number) => {
-    //   return connections?.modelOutputs?.find((l) => l.pos === index);
-    // };
-    // const isVisible2 = (index: number) => {
-    //   return links?.some((l) => l.weights.includes(index));
-    // };
-
     return data ? (
-      <Box sx={{ display: "flex", alignItems: "flex-start", gap: 2 }}>
-        <List sx={{ width: "200px", bgcolor: "background.paper" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          gap: 2,
+          position: "relative",
+        }}>
+        <div
+          id="test"
+          style={{ position: "absolute", width: "100%", height: "100%" }}></div>
+        <List sx={{ bgcolor: "background.paper" }}>
           <ListItem>
             <ListItemText primary="input" />
           </ListItem>
@@ -80,7 +87,7 @@ const VectorRepresentation: FC<VectorRepresentationProps> =
             ))}
           </div>
         </List>
-        <List sx={{ width: "200px", bgcolor: "background.paper" }}>
+        <List sx={{ bgcolor: "background.paper" }}>
           <ListItem>
             <ListItemText primary="Lanugage Model Output" />
           </ListItem>
@@ -96,7 +103,7 @@ const VectorRepresentation: FC<VectorRepresentationProps> =
           </div>
         </List>
 
-        <List sx={{ width: "200px", bgcolor: "background.paper" }}>
+        <List sx={{ bgcolor: "background.paper" }}>
           <ListItem>
             <ListItemText primary="RAT-Layer Output" />
           </ListItem>

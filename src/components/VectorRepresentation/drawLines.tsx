@@ -4,9 +4,11 @@ import { Connection } from "./type";
 
 function getOffset(el: HTMLElement) {
   const rect = el.getBoundingClientRect();
+
   return {
-    left: rect.left + window.pageXOffset,
-    top: rect.top + window.pageYOffset,
+    left: rect.left + window.screenX,
+    top: rect.top + window.scrollY,
+    right: rect.right + window.screenX,
     width: rect.width || el.offsetWidth,
     height: rect.height || el.offsetHeight,
   };
@@ -26,7 +28,7 @@ export function connect({
   // draw a line connecting elements
   const off1 = getOffset(elem1);
   const off2 = getOffset(elem2);
-  console.log(off1, off2);
+
   // bottom right
   const x1 = off1.left + off1.width;
   const y1 = off1.top + off1.height;
@@ -59,36 +61,70 @@ export function connect({
     },
     ""
   );
-  // <svg width="500" height="500"><line x1="50" y1="50" x2="350" y2="350" stroke="black"/></svg>
 
   // document.getElementById("test")?.appendChild(e)
   //   x1,y1 indicates center of first div and
   // x2,y2 indicates center of second div
+  const containerOffset = getOffset(document.getElementById("test")!);
+
   return (
     // <svg width="5000" height="5000">
     <line
-      x1={off1.left + off1.width / 2}
-      y1={off1.top + off1.height / 2}
-      x2={off2.left + off2.width / 2}
-      y2={off2.top + off2.height / 2}
+      x1={off1.right - containerOffset.left}
+      y1={off1.top - containerOffset.top + off1.height / 2}
+      x2={off2.left - containerOffset.left}
+      y2={off2.top - containerOffset.top + off2.height / 2}
       stroke="black"
     />
     // </svg>
   );
-  // render(
-  //   <svg width="5000" height="5000">
-  //     <line
-  //       x1={off1.left + off1.width / 2}
-  //       y1={off1.top + off1.height / 2}
-  //       x2={off2.left + off2.width / 2}
-  //       y2={off2.top + off2.height / 2}
-  //       stroke="black"
-  //     />
-  //   </svg>,
-  //   document.getElementById("test")
-  // );
 }
 
+function resetColors({
+  inputContainerElem,
+  modelOutputContainerElem,
+  rtaOutputContainerElem,
+}: {
+  inputContainerElem: HTMLElement;
+  modelOutputContainerElem: HTMLElement;
+  rtaOutputContainerElem: HTMLElement;
+}) {
+  Array.from(inputContainerElem.children).forEach((e) => {
+    const htmlEl = e as HTMLElement;
+    htmlEl.style.backgroundColor = "white";
+  });
+  Array.from(modelOutputContainerElem.children).forEach((e) => {
+    const htmlEl = e as HTMLElement;
+    htmlEl.style.backgroundColor = "white";
+  });
+  Array.from(rtaOutputContainerElem.children).forEach((e) => {
+    const htmlEl = e as HTMLElement;
+    htmlEl.style.backgroundColor = "white";
+  });
+}
+function resetLines({
+  inputContainerElem,
+  modelOutputContainerElem,
+  rtaOutputContainerElem,
+}: {
+  inputContainerElem: HTMLElement;
+  modelOutputContainerElem: HTMLElement;
+  rtaOutputContainerElem: HTMLElement;
+}) {
+  resetColors({
+    inputContainerElem,
+    modelOutputContainerElem,
+    rtaOutputContainerElem,
+  });
+  const Lines = () => (
+    <svg
+      height="100%"
+      width="100%"
+      preserveAspectRatio="none"
+      style={{ pointerEvents: "none" }}></svg>
+  );
+  render(<Lines />, document.getElementById("test"));
+}
 export default function drawLines({
   inputContainerElem,
   modelOutputContainerElem,
@@ -100,27 +136,63 @@ export default function drawLines({
   rtaOutputContainerElem: HTMLElement;
   connections: Connection;
 }) {
+  resetColors({
+    inputContainerElem,
+    modelOutputContainerElem,
+    rtaOutputContainerElem,
+  });
+  if (connections.pos === -1) {
+    resetLines({
+      inputContainerElem,
+      modelOutputContainerElem,
+      rtaOutputContainerElem,
+    });
+    return;
+  }
   const elems: any[] = [];
-  const inputElem = inputContainerElem.children[connections.pos];
+  const inputElem = inputContainerElem.children[connections.pos] as HTMLElement;
+  inputElem.style.backgroundColor = "red";
+
   connections.modelOutputs.forEach((modelOutput) => {
+    const fromElem = inputElem as HTMLElement;
+    const toElem = modelOutputContainerElem.children[
+      modelOutput.pos
+    ] as HTMLElement;
+    toElem.style.backgroundColor = "red";
     elems.push(
       connect({
-        elem1: inputElem as HTMLElement,
-        elem2: modelOutputContainerElem.children[
-          modelOutput.pos
-        ] as HTMLElement,
+        elem1: fromElem,
+        elem2: toElem,
         color: "#000000",
         thickness: 2,
       })
     );
+    modelOutput.ratOutputs.pos.forEach((p) => {
+      const fromElem = modelOutputContainerElem.children[
+        modelOutput.pos
+      ] as HTMLElement;
+      const toElem = rtaOutputContainerElem.children[p] as HTMLElement;
+      toElem.style.backgroundColor = "red";
+      elems.push(
+        connect({
+          elem1: fromElem,
+          elem2: toElem,
+          color: "#000000",
+          thickness: 2,
+        })
+      );
+    });
   });
   const Lines = () => (
-    <svg width="5000" height="5000">
+    <svg
+      height="100%"
+      width="100%"
+      preserveAspectRatio="none"
+      style={{ pointerEvents: "none" }}>
       {elems.map((e, index) => (
         <Fragment key={index}>{e}</Fragment>
       ))}
     </svg>
   );
   render(<Lines />, document.getElementById("test"));
-  // return elems;
 }
