@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { FC } from "react";
 import { Handle, Position } from "react-flow-renderer";
 import ForeignKeyIcon from "../../../public/foreign-key.svg";
 import PrimaryKeyIcon from "../../../public/primary-key.svg";
@@ -7,8 +7,8 @@ interface TableNodeProps {
   pk: string;
   table: TableModel;
 }
-const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> = memo(
-  ({ data, isConnectable }) => {
+const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
+  function TableNode({ data, isConnectable }) {
     const { table } = data;
 
     return (
@@ -99,6 +99,5 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> = memo(
         </div>
       </>
     );
-  }
-);
+  };
 export default TableNode;
