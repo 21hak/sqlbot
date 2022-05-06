@@ -7,6 +7,7 @@ export interface TableModel {
   name: string;
   columns: ColumnModel[];
   primaryKey: string;
+  foreignKey: ColumnModel[];
 }
 
 export interface SchemaLinkModel {
