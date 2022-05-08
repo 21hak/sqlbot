@@ -1,4 +1,4 @@
-import { Box, CardContent, CardHeader } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { FC, useState } from "react";
 import { Handle, Position } from "react-flow-renderer";
 import { useRecoilValue } from "recoil";
@@ -20,6 +20,7 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
     const { name, columns } = table;
     const attentionWeight = useRecoilValue(attentionWeightByTable(name));
     const schemaLink = useRecoilValue(schemaLinkState);
+    console.log(schemaLink);
 
     const [weightVisible, setWeightVisible] = useState(false);
     const handleMouseEnter = () => {
@@ -31,55 +32,43 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
 
     return (
       <S.StyledCard
-        sx={{ minWidth: 230, position: "relative", overflow: "visible" }}
+        sx={{ position: "relative", overflow: "visible" }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}>
-        <Box id={`${name}`}>
-          <CardHeader
-            title={name.toLocaleLowerCase()}
-            sx={{
-              p: 1,
-              borderStyle: schemaLink.full.includes(name.toLocaleLowerCase())
-                ? "solid"
-                : schemaLink.partial.includes(name.toLocaleLowerCase())
-                ? "dashed"
-                : "none",
-            }}
-          />
+        <Box
+          id={`${name}`}
+          sx={{
+            margin: "8px",
+            textAlign: "center",
+            borderStyle: schemaLink.full.includes(name)
+              ? "solid"
+              : schemaLink.partial.includes(name)
+              ? "dashed"
+              : "none",
+          }}>
+          {name}
         </Box>
-        <CardContent sx={{ p: 0 }}>
+        <Box sx={{ p: 0, paddingBottom: "16px" }}>
           {columns.map((column, index) => (
             <Box
-              id={`${name.toLocaleLowerCase()}-${column.name.toLocaleLowerCase()}`}
-              key={`${name.toLocaleLowerCase()}-${column.name.toLocaleLowerCase()}`}
+              id={`${name}-${column.name}`}
+              key={`${name}-${column.name}`}
               sx={{
+                width: "100%",
                 display: "flex",
                 justifyContent: "space-between",
                 position: "relative",
                 padding: "0 24px 0 24px",
                 backgroundColor: getColors(
-                  attentionWeight.weights.find(
-                    (w) => w.key === column.name.toLocaleLowerCase()
-                  )?.weight ?? 1
+                  attentionWeight.weights.find((w) => w.key === column.name)
+                    ?.weight ?? 1
                 ),
-                borderStyle: schemaLink.full.includes(
-                  column.name.toLocaleLowerCase()
-                )
+                borderStyle: schemaLink.full.includes(column.name)
                   ? "solid"
-                  : schemaLink.partial.includes(column.name.toLocaleLowerCase())
+                  : schemaLink.partial.includes(column.name)
                   ? "dashed"
                   : "none",
               }}>
-              {/* <Typography sx={{ fontSize: 14 }}>{columnName}</Typography>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary">
-                {type}
-              </Typography> */}
-              {/* <div
-                key={index}
-                style={{
-                  position: "relative",
-                  padding: "0 24px 0 24px",
-                }}> */}
               {column.name === table.primaryKey && (
                 <Handle
                   type="target"
@@ -91,6 +80,7 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
                     transform: "translateY(-50%)",
                     top: "50%",
                     backgroundColor: "transparent",
+                    border: "none",
                   }}
                   isConnectable={true}
                 />
@@ -110,6 +100,7 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
               )}
               <div
                 style={{
+                  width: "100%",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
@@ -131,7 +122,7 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
               )}
               <Handle
                 type="source"
-                id={column.name.toLowerCase()}
+                id={column.name}
                 position={Position.Right}
                 style={{
                   position: "absolute",
@@ -139,13 +130,13 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
                   transform: "translateY(-50%)",
                   top: "50%",
                   backgroundColor: "transparent",
+                  border: "none",
                 }}
                 isConnectable={true}
               />
-              {/* </div> */}
             </Box>
           ))}
-        </CardContent>
+        </Box>
 
         {attentionWeight.weights.length > 0 && (
           <AttenWeightList
@@ -227,7 +218,7 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
                 )}
                 <Handle
                   type="source"
-                  id={column.name.toLowerCase()}
+                  id={column.name}
                   position={Position.Right}
                   style={{
                     position: "absolute",
