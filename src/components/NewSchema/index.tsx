@@ -1,11 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import ReactFlow, {
   addEdge,
   useEdgesState,
   useNodesState,
 } from "react-flow-renderer";
+import { useSetRecoilState } from "recoil";
 import { useDatabaseSchema } from "../../apis/hooks";
+import { attentionWeightState } from "../../atoms";
 import createTables from "../../lib/createTables";
+import { AttentionWeightModel } from "../../lib/models";
 // import ColorSelectorNode from "./ColorSelectorNode";
 import createEdges from "./createEdges";
 import createNodes from "./createNodes";
@@ -22,22 +25,39 @@ const nodeTypes = {
   tableNode: TableNode,
 };
 
-const CustomNodeFlow = () => {
+interface SchemaProps {
+  attentionWeight?: AttentionWeightModel;
+}
+
+const LastPage: FC<SchemaProps> = function ({ attentionWeight }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [bgColor, setBgColor] = useState(initBgColor);
+  const setAttentionWeight = useSetRecoilState(attentionWeightState);
   const { data } = useDatabaseSchema();
 
   useEffect(() => {
     if (data) {
       const tables = createTables(data);
-      const tableTree= createTableTree(tables, data);
+      const tableTree = createTableTree(tables, data);
       const nodes = createNodes(tableTree);
       setNodes(nodes);
+
       const edges = createEdges(data);
       setEdges(edges);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (attentionWeight && nodes) {
+      setAttentionWeight({
+        word: attentionWeight.word,
+        weights: attentionWeight.weights.map((f) => {
+          return { key: f.key, weight: f.weight };
+        }),
+      });
+    }
+  }, [attentionWeight, nodes]);
 
   const onConnect = useCallback(
     (params) =>
@@ -64,4 +84,4 @@ const CustomNodeFlow = () => {
   );
 };
 
-export default CustomNodeFlow;
+export default LastPage;

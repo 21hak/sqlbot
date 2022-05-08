@@ -44,7 +44,11 @@ const TestPage: NextPage = () => {
             height: "100%",
             overflow: "auto",
           }}>
-          <Schema />
+          <Schema attentionWeight={
+              attentionWeightsData && selected
+                ? attentionWeightsData[selected]
+                : undefined
+            }/>
         </Container>
       </Box>
     </Box>
