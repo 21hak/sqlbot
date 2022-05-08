@@ -9,6 +9,7 @@ import createTables from "../../lib/createTables";
 // import ColorSelectorNode from "./ColorSelectorNode";
 import createEdges from "./createEdges";
 import createNodes from "./createNodes";
+import createTableTree from "./createTableTree";
 import TableNode from "./TableNode";
 // import "./index.css";
 
@@ -30,7 +31,8 @@ const CustomNodeFlow = () => {
   useEffect(() => {
     if (data) {
       const tables = createTables(data);
-      const nodes = createNodes(tables);
+      const tableTree= createTableTree(tables, data);
+      const nodes = createNodes(tableTree);
       setNodes(nodes);
       const edges = createEdges(data);
       setEdges(edges);

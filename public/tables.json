@@ -75,8 +75,8 @@
     "db_id": "concert_singer",
     "foreign_keys": [
       [18, 1],
-      [21, 8],
-      [20, 15]
+      [20, 15],
+      [21, 8]
     ],
     "primary_keys": [1, 8, 15, 20],
     "table_names": ["stadium", "singer", "concert", "singer in concert"],
