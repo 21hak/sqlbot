@@ -1,0 +1,200 @@
+{
+  "choice": "('sql', (True, True, True, True, True, True))",
+  "score": -0.10759802162647247,
+  "next": [
+    {
+      "choice": "('select', ('bool', True))",
+      "score": -0.10275166481733322,
+      "next": [
+        {
+          "choice": "False",
+          "score": -0.11378764361143112,
+          "next": [
+            {
+              "choice": "<EOS>",
+              "score": -0.10490524768829346,
+              "next": [
+                {
+                  "choice": "('agg*', 1)",
+                  "score": -0.0948561280965805,
+                  "next": [
+                    {
+                      "choice": "('agg', (True, True))",
+                      "score": -0.10467733442783356,
+                      "next": [
+                        {
+                          "choice": "('agg_type', 'NoneAggOp')",
+                          "score": -0.10544177889823914,
+                          "next": [
+                            {
+                              "choice": "('val_unit', 'Column')",
+                              "score": -0.10408677905797958,
+                              "next": [
+                                {
+                                  "choice": "('Column', (True,))",
+                                  "score": -0.10662544518709183,
+                                  "next": [
+                                    {
+                                      "choice": "('col_unit', (True, 'int', 'bool'))",
+                                      "score": -0.10550206899642944,
+                                      "next": [
+                                        {
+                                          "choice": "('agg_type', 'NoneAggOp')",
+                                          "score": -0.10521925240755081,
+                                          "next": [
+                                            {
+                                              "choice": "*",
+                                              "score": -0.33361732959747314,
+                                              "next": [
+                                                {
+                                                  "choice": "False",
+                                                  "score": -0.1121671050786972,
+                                                  "next": [
+                                                    {
+                                                      "choice": "<EOS>",
+                                                      "score": -0.10575314611196518,
+                                                      "next": [
+                                                        {
+                                                          "choice": "('sql_where', (False,))",
+                                                          "score": -0.09724396467208862,
+                                                          "next": [
+                                                            {
+                                                              "choice": "('sql_groupby', (False, False))",
+                                                              "score": -0.10050644725561142,
+                                                              "next": [
+                                                                {
+                                                                  "choice": "('sql_orderby', (False, False))",
+                                                                  "score": -0.11061961203813553,
+                                                                  "next": [
+                                                                    {
+                                                                      "choice": "('sql_ieu', (False, False, False))",
+                                                                      "score": -0.10579680651426315,
+                                                                      "next": []
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "choice": "Name",
+                                              "score": -1.7291347980499268,
+                                              "next": [
+                                                {
+                                                  "choice": "False",
+                                                  "score": -0.11276068538427353,
+                                                  "next": [
+                                                    {
+                                                      "choice": "<EOS>",
+                                                      "score": -0.10485289990901947,
+                                                      "next": [
+                                                        {
+                                                          "choice": "('sql_where', (False,))",
+                                                          "score": -0.0996798500418663,
+                                                          "next": [
+                                                            {
+                                                              "choice": "('sql_groupby', (False, False))",
+                                                              "score": -0.10098910331726074,
+                                                              "next": [
+                                                                {
+                                                                  "choice": "('sql_orderby', (False, False))",
+                                                                  "score": -0.11138752847909927,
+                                                                  "next": [
+                                                                    {
+                                                                      "choice": "('sql_ieu', (False, False, False))",
+                                                                      "score": -0.10588689148426056,
+                                                                      "next": []
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "choice": "('agg*', 5)",
+                  "score": -6.853987693786621,
+                  "next": [
+                    {
+                      "choice": "('agg', (True, True))",
+                      "score": -0.10513018816709518,
+                      "next": [
+                        {
+                          "choice": "('agg_type', 'NoneAggOp')",
+                          "score": -0.10476300120353699,
+                          "next": [
+                            {
+                              "choice": "('val_unit', 'Column')",
+                              "score": -0.10353994369506836,
+                              "next": [
+                                {
+                                  "choice": "('Column', (True,))",
+                                  "score": -0.10695970058441162,
+                                  "next": [
+                                    {
+                                      "choice": "('col_unit', (True, 'int', 'bool'))",
+                                      "score": -0.10536903887987137,
+                                      "next": [
+                                        {
+                                          "choice": "('agg_type', 'NoneAggOp')",
+                                          "score": -0.10531442612409592,
+                                          "next": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "choice": "True",
+          "score": -8.324522972106934,
+          "next": [
+            {
+              "choice": "<EOS>",
+              "score": -0.1052820235490799,
+              "next": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

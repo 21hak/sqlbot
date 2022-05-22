@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import {
   AttentionWeightModel,
+  BeamSearchHistoryModel,
   CandidateModel,
   DatabaseSchemaModel,
   LanguageModelOutputModel,
@@ -8,6 +9,7 @@ import {
 } from "../lib/models";
 import {
   getAttentionWeights,
+  getBeanSearchHisotry,
   getCandidates,
   getDatabaseSchema,
   getLanguageModel,
@@ -70,6 +72,20 @@ export const useLanugageModel = () => {
   const rst = useQuery<LanguageModelOutputModel>(
     ["/language-model"],
     () => getLanguageModel(),
+    {
+      staleTime: Infinity,
+      enabled: true,
+      refetchOnWindowFocus: false,
+      refetchOnMount: true,
+    }
+  );
+  return rst;
+};
+
+export const useBeamSearchHistoryModel = () => {
+  const rst = useQuery<BeamSearchHistoryModel>(
+    ["/beam-search-history-model"],
+    () => getBeanSearchHisotry(),
     {
       staleTime: Infinity,
       enabled: true,

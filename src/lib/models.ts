@@ -57,4 +57,10 @@ export interface LanguageModelOutputModel {
   weights2: number[][];
 }
 
+export interface BeamSearchHistoryModel {
+  choice: string;
+  score: number;
+  next: BeamSearchHistoryModel[];
+}
+
 // export type DBScheme = Array<TableScheme>;

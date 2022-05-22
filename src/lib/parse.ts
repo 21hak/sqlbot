@@ -1,5 +1,6 @@
 import {
   AttentionWeightModel,
+  BeamSearchHistoryModel,
   DatabaseSchemaModel,
   LanguageModelOutputModel,
   SchemaLinkModel,
@@ -62,3 +63,9 @@ export function parseLanguageModelData(rawData: any): LanguageModelOutputModel {
   const renamedObj = renameKeys(rawData, newKeys);
   return renamedObj;
 }
+
+export function parseBeamSearchHistory(rawData: any): BeamSearchHistoryModel {
+  
+  return rawData
+}
+

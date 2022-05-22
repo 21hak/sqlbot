@@ -1,4 +1,5 @@
 import analyzeResultData from "../../public/analyzeResult.json";
+import beamSearchHistoryData from "../../public/beam_search_history.json";
 import attentionWeightsData from "../../public/attentionWeights.json";
 import candidateData from "../../public/candidates.json";
 import schemaLinksData from "../../public/schemaLinksData.json";
@@ -54,6 +55,14 @@ export function getLanguageModel(): Promise<LanguageModelOutputModel> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(parseLanguageModelData(analyzeResultData));
+    }, 100);
+  });
+}
+
+export function getBeanSearchHisotry(): Promise<any> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(beamSearchHistoryData)
     }, 100);
   });
 }
