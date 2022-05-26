@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import React, { FC, useMemo, useRef, useState } from "react";
 import Tree from "react-d3-tree";
 import { useBeamSearchHistoryModel } from "../../apis/hooks";
-import { BeamSearchHistoryModel } from "../../lib/models";
 
 interface BeamSearchHistoryProps {}
 
@@ -12,10 +11,7 @@ interface Converted {
   score: number;
   children: Converted[];
 }
-function renameKeys(
-  obj: BeamSearchHistoryModel,
-  newKeys: Record<string, string>
-) {
+function renameKeys(obj: Record<string, any>, newKeys: Record<string, string>) {
   const keyValues = Object.keys(obj).map((key) => {
     let newKey = null;
     if (key === "choice") {
@@ -26,7 +22,7 @@ function renameKeys(
       newKey = key;
     }
     if (key === "next") {
-      obj[key] = obj[key].map((obj) => renameKeys(obj, newKeys));
+      obj[key] = obj[key].map((obj: any) => renameKeys(obj, newKeys));
     }
     return {
       [newKey]: obj[key],
@@ -56,8 +52,7 @@ const BeamSearchHistory: FC<BeamSearchHistoryProps> =
             collapsible={false}
             translate={{ x: 0, y: 600 }}
             data={convertedData}
-            onNodeMouseOver={(node, e) => {
-              const { data } = node;
+            onNodeMouseOver={(node: any, e: any) => {
               setPosition({
                 left: e.clientX,
                 top: e.clientY - (wrapperRef.current?.offsetTop ?? 0) - 60,
@@ -89,7 +84,13 @@ const BeamSearchHistory: FC<BeamSearchHistoryProps> =
 
 export default BeamSearchHistory;
 
-const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
+const renderRectSvgNode = ({
+  nodeDatum,
+  toggleNode,
+}: {
+  nodeDatum: any;
+  toggleNode: any;
+}) => (
   <g>
     <circle cx="0" cy="0" r="15"></circle>
     <text fill="black" strokeWidth="1" x="-15" y="30">
