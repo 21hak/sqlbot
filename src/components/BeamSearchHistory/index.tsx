@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import React, { FC, useMemo, useRef, useState } from "react";
 import Tree from "react-d3-tree";
@@ -30,6 +31,15 @@ function renameKeys(obj: Record<string, any>, newKeys: Record<string, string>) {
   });
   return Object.assign({}, ...keyValues);
 }
+const Wrapper = styled(Box)`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .selected {
+    stroke-width: 3;
+    stroke: red;
+  }
+`;
 
 const BeamSearchHistory: FC<BeamSearchHistoryProps> =
   function BeamSearchHistory() {
@@ -42,11 +52,19 @@ const BeamSearchHistory: FC<BeamSearchHistoryProps> =
       () => data && renameKeys(data, { choice: "name", next: "children" }),
       [data]
     );
+    const getDynamicPathClass = ({ source, target }: any, orientation: any) => {
+      if (target.data.selected && source.data.selected) {
+        return "selected";
+      }
+
+      return "";
+    };
 
     return (
-      <Box
-        sx={{ width: "100%", height: "100%", position: "relative" }}
-        ref={wrapperRef}>
+      // <Box
+      //   sx={{ width: "100%", height: "100%", position: "relative" }}
+      //   ref={wrapperRef}>
+      <Wrapper ref={wrapperRef}>
         {convertedData && (
           <Tree
             collapsible={false}
@@ -59,6 +77,7 @@ const BeamSearchHistory: FC<BeamSearchHistoryProps> =
                 score: node.data.score,
               });
             }}
+            pathClassFunc={getDynamicPathClass}
             renderCustomNodeElement={renderRectSvgNode}
             onNodeMouseOut={() => {
               setPosition(undefined);
@@ -78,7 +97,7 @@ const BeamSearchHistory: FC<BeamSearchHistoryProps> =
             {position.score}
           </Box>
         )}
-      </Box>
+      </Wrapper>
     );
   };
 
@@ -87,14 +106,24 @@ export default BeamSearchHistory;
 const renderRectSvgNode = ({
   nodeDatum,
   toggleNode,
+  hierarchyPointNode,
+  onNodeMouseOver,
+  onNodeMouseOut,
 }: {
   nodeDatum: any;
   toggleNode: any;
-}) => (
-  <g>
-    <circle cx="0" cy="0" r="15"></circle>
-    <text fill="black" strokeWidth="1" x="-15" y="30">
-      {nodeDatum.name}
-    </text>
-  </g>
-);
+  hierarchyPointNode: any;
+  onNodeMouseOver: any;
+  onNodeMouseOut: any;
+}) => {
+  console.log(hierarchyPointNode);
+  const yPos = hierarchyPointNode.depth % 2 === 1 ? 40 : -40;
+  return (
+    <g onMouseOver={onNodeMouseOver} onMouseOut={onNodeMouseOut}>
+      <circle cx="0" cy="0" r="15"></circle>
+      <text fill="black" strokeWidth="1" x="-15" y={yPos}>
+        {nodeDatum.name}
+      </text>
+    </g>
+  );
+};

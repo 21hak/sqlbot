@@ -1,74 +1,92 @@
 {
   "choice": "('sql', (True, True, True, True, True, True))",
   "score": -0.10759802162647247,
+  "selected": true,
   "next": [
     {
       "choice": "('select', ('bool', True))",
       "score": -0.10275166481733322,
+      "selected": true,
       "next": [
         {
           "choice": "False",
           "score": -0.11378764361143112,
+          "selected": true,
           "next": [
             {
               "choice": "<EOS>",
               "score": -0.10490524768829346,
+              "selected": true,
               "next": [
                 {
                   "choice": "('agg*', 1)",
                   "score": -0.0948561280965805,
+                  "selected": true,
                   "next": [
                     {
                       "choice": "('agg', (True, True))",
                       "score": -0.10467733442783356,
+                      "selected": true,
                       "next": [
                         {
                           "choice": "('agg_type', 'NoneAggOp')",
                           "score": -0.10544177889823914,
+                          "selected": true,
                           "next": [
                             {
                               "choice": "('val_unit', 'Column')",
                               "score": -0.10408677905797958,
+                              "selected": true,
                               "next": [
                                 {
                                   "choice": "('Column', (True,))",
                                   "score": -0.10662544518709183,
+                                  "selected": true,
                                   "next": [
                                     {
                                       "choice": "('col_unit', (True, 'int', 'bool'))",
                                       "score": -0.10550206899642944,
+                                      "selected": true,
                                       "next": [
                                         {
                                           "choice": "('agg_type', 'NoneAggOp')",
                                           "score": -0.10521925240755081,
+                                          "selected": true,
                                           "next": [
                                             {
                                               "choice": "*",
                                               "score": -0.33361732959747314,
+                                              "selected": true,
                                               "next": [
                                                 {
                                                   "choice": "False",
                                                   "score": -0.1121671050786972,
+                                                  "selected": true,
                                                   "next": [
                                                     {
                                                       "choice": "<EOS>",
                                                       "score": -0.10575314611196518,
+                                                      "selected": true,
                                                       "next": [
                                                         {
                                                           "choice": "('sql_where', (False,))",
                                                           "score": -0.09724396467208862,
+                                                          "selected": true,
                                                           "next": [
                                                             {
                                                               "choice": "('sql_groupby', (False, False))",
                                                               "score": -0.10050644725561142,
+                                                              "selected": true,
                                                               "next": [
                                                                 {
                                                                   "choice": "('sql_orderby', (False, False))",
                                                                   "score": -0.11061961203813553,
+                                                                  "selected": true,
                                                                   "next": [
                                                                     {
                                                                       "choice": "('sql_ieu', (False, False, False))",
                                                                       "score": -0.10579680651426315,
+                                                                      "selected": true,
                                                                       "next": []
                                                                     }
                                                                   ]
@@ -141,30 +159,37 @@
                 {
                   "choice": "('agg*', 5)",
                   "score": -6.853987693786621,
+                  "selected": false,
                   "next": [
                     {
                       "choice": "('agg', (True, True))",
                       "score": -0.10513018816709518,
+                      "selected": false,
                       "next": [
                         {
                           "choice": "('agg_type', 'NoneAggOp')",
                           "score": -0.10476300120353699,
+                          "selected": false,
                           "next": [
                             {
                               "choice": "('val_unit', 'Column')",
                               "score": -0.10353994369506836,
+                              "selected": false,
                               "next": [
                                 {
                                   "choice": "('Column', (True,))",
                                   "score": -0.10695970058441162,
+                                  "selected": false,
                                   "next": [
                                     {
                                       "choice": "('col_unit', (True, 'int', 'bool'))",
                                       "score": -0.10536903887987137,
+                                      "selected": false,
                                       "next": [
                                         {
                                           "choice": "('agg_type', 'NoneAggOp')",
                                           "score": -0.10531442612409592,
+                                          "selected": false,
                                           "next": []
                                         }
                                       ]
@@ -186,10 +211,12 @@
         {
           "choice": "True",
           "score": -8.324522972106934,
+          "selected": false,
           "next": [
             {
               "choice": "<EOS>",
               "score": -0.1052820235490799,
+              "selected": false,
               "next": []
             }
           ]

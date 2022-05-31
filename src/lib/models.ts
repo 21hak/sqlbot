@@ -60,6 +60,7 @@ export interface LanguageModelOutputModel {
 export interface BeamSearchHistoryModel {
   choice: string;
   score: number;
+  selected: boolean;
   next: BeamSearchHistoryModel[];
 }
 
