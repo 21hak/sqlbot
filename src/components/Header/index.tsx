@@ -1,10 +1,9 @@
 import { Button, styled, Toolbar } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import MuiToolBar, { ToolbarProps } from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import React, { FC } from "react";
-import BasicMenu from "./Menu";
 
 interface HeaderProps {}
 
@@ -20,12 +19,6 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const SubHeader = styled(MuiToolBar)<ToolbarProps>(({}) => ({
-  backgroundColor: "white",
-}));
-
-const pages = ["Explore", "Gather", "Analyze"];
-
 const Header: FC<HeaderProps> = function Header({}) {
   return (
     <AppBar position="absolute">
@@ -33,27 +26,34 @@ const Header: FC<HeaderProps> = function Header({}) {
         sx={{
           pr: "24px",
         }}>
-        <Typography
-          component="h1"
-          variant="h6"
-          color="inherit"
-          noWrap
-          sx={{ pr: 1 }}>
-          SQLBot
-        </Typography>
+        <Link href="/">
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            sx={{ pr: 1, cursor: "pointer" }}>
+            SQLBot
+          </Typography>
+        </Link>
         <Box sx={{ flexGrow: 1, display: "flex" }}>
-          {pages.map((page) => (
-            <Button key={page} sx={{ my: 2, color: "white", display: "block" }}>
-              {page}
+          <Link href="/">
+            <Button sx={{ my: 2, color: "white", display: "block" }}>
+              schema
             </Button>
-          ))}
+          </Link>
+          <Link href="/dependency">
+            <Button sx={{ my: 2, color: "white", display: "block" }}>
+              dependency
+            </Button>
+          </Link>
+          <Link href="/beamSearch">
+            <Button sx={{ my: 2, color: "white", display: "block" }}>
+              beam search
+            </Button>
+          </Link>
         </Box>
       </Toolbar>
-      <SubHeader variant="dense">
-        <BasicMenu />
-        <BasicMenu />
-        <BasicMenu />
-      </SubHeader>
     </AppBar>
   );
 };

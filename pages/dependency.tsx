@@ -1,13 +1,9 @@
 import Box from "@mui/material/Box";
 import { NextPage } from "next";
-import { useRef } from "react";
 import Candidates from "../src/components/Candidates/Candidates";
 import VectorRepresentation from "../src/components/VectorRepresentation/VectorRepresentation";
 // https://stackoverflow.com/questions/8672369/how-to-draw-a-line-between-two-divs
 const Page: NextPage = () => {
-  const ref1 = useRef<any>();
-  const ref2 = useRef<any>();
-
   return (
     <Box
       component="main"

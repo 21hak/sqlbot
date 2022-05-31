@@ -7,11 +7,11 @@ import React, { useState } from "react";
 import { useAttentionWeights, useSchemaLinks } from "../src/apis/hooks";
 import SideBar from "../src/components/SideBar";
 
-const Schema = dynamic(() => import("../src/components/Scheme"), {
+const Schema = dynamic(() => import("../src/components/NewSchema"), {
   ssr: false,
 });
 
-const Home: NextPage = () => {
+const TestPage: NextPage = () => {
   const { data: schemaLinksData } = useSchemaLinks();
   const { data: attentionWeightsData } = useAttentionWeights();
   const [selected, setSelected] = useState<number>();
@@ -44,17 +44,15 @@ const Home: NextPage = () => {
             height: "100%",
             overflow: "auto",
           }}>
-          <Schema
-            attentionWeight={
+          <Schema attentionWeight={
               attentionWeightsData && selected
                 ? attentionWeightsData[selected]
                 : undefined
-            }
-          />
+            }/>
         </Container>
       </Box>
     </Box>
   );
 };
 
-export default Home;
+export default TestPage;
