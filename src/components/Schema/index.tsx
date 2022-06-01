@@ -9,7 +9,6 @@ import { useDatabaseSchema } from "../../apis/hooks";
 import { attentionWeightState } from "../../atoms";
 import createTables from "../../lib/createTables";
 import { AttentionWeightModel } from "../../lib/models";
-// import ColorSelectorNode from "./ColorSelectorNode";
 import createEdges from "./createEdges";
 import createNodes from "./createNodes";
 import createTableTree from "./createTableTree";
@@ -21,7 +20,6 @@ const initBgColor = "#1A192B";
 const connectionLineStyle = { stroke: "#fff" };
 const snapGrid: [number, number] = [20, 20];
 const nodeTypes = {
-  // selectorNode: ColorSelectorNode,
   tableNode: TableNode,
 };
 

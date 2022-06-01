@@ -20,7 +20,6 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
     const { name, columns } = table;
     const attentionWeight = useRecoilValue(attentionWeightByTable(name));
     const schemaLink = useRecoilValue(schemaLinkState);
-    console.log(schemaLink);
 
     const [weightVisible, setWeightVisible] = useState(false);
     const handleMouseEnter = () => {

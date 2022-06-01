@@ -40,6 +40,5 @@ export default function createTableTree(
       roots.push(e);
     }
   });
-  console.log(roots)
   return roots;
 }

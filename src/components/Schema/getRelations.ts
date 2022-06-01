@@ -1,6 +1,7 @@
-import { DBScheme } from "../Scheme/utils/type";
+import { DatabaseSchemaModel } from "../../lib/models";
 
-export default function getRelations(schema: DBScheme) {
+
+export default function getRelations(schema: DatabaseSchemaModel) {
   const tables = schema.tableNamesOriginal;
   const relations = schema.foreignKeys.map(([f1, f2], index) => {
     return {

@@ -115,7 +115,6 @@ const renderRectSvgNode = ({
   onNodeMouseOver: any;
   onNodeMouseOut: any;
 }) => {
-  console.log(hierarchyPointNode);
   const yPos = hierarchyPointNode.depth % 2 === 1 ? 40 : -40;
   return (
     <g onMouseOver={onNodeMouseOver} onMouseOut={onNodeMouseOut}>

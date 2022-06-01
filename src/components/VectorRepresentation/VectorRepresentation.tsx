@@ -47,19 +47,25 @@ const VectorRepresentation: FC<VectorRepresentationProps> =
 
     useEffect(() => {
       if (
+        data &&
         connections &&
         inputRef.current &&
         modelOutputRef.current &&
         rtaOutputRef.current
       ) {
+        const inputPos = data.inputTokens.findIndex((t) => t === candidate);
+        const weights1 = data.weights1[inputPos];
+        const weights2 = data.weights2;
         drawLines({
           inputContainerElem: inputRef.current,
           modelOutputContainerElem: modelOutputRef.current,
           rtaOutputContainerElem: rtaOutputRef.current,
           connections: connections,
+          weights1,
+          weights2,
         });
       }
-    }, [connections, inputRef.current]);
+    }, [connections, inputRef.current, data]);
 
     return data ? (
       <Box
@@ -93,10 +99,7 @@ const VectorRepresentation: FC<VectorRepresentationProps> =
           </ListItem>
           <div ref={modelOutputRef}>
             {data.inputTokens.map((token, index) => (
-              <ListItem
-                key={index}
-                // sx={{ backgroundColor: isVisible(index) ? "red" : "" }}
-              >
+              <ListItem key={index}>
                 <ListItemText primary={token} />
               </ListItem>
             ))}
@@ -109,10 +112,7 @@ const VectorRepresentation: FC<VectorRepresentationProps> =
           </ListItem>
           <div ref={rtaOutputRef}>
             {data.outputTokens.map((token, index) => (
-              <ListItem
-                key={index}
-                // sx={{ backgroundColor: isVisible2(index) ? "red" : "" }}
-              >
+              <ListItem key={index}>
                 <ListItemText primary={token} />
               </ListItem>
             ))}

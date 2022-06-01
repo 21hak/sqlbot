@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { render } from "react-dom";
+import getColors from "../../lib/getColor";
 import { Connection } from "./type";
 
 function getOffset(el: HTMLElement) {
@@ -62,13 +63,9 @@ export function connect({
     ""
   );
 
-  // document.getElementById("test")?.appendChild(e)
-  //   x1,y1 indicates center of first div and
-  // x2,y2 indicates center of second div
   const containerOffset = getOffset(document.getElementById("test")!);
 
   return (
-    // <svg width="5000" height="5000">
     <line
       x1={off1.right - containerOffset.left}
       y1={off1.top - containerOffset.top + off1.height / 2}
@@ -76,7 +73,6 @@ export function connect({
       y2={off2.top - containerOffset.top + off2.height / 2}
       stroke="black"
     />
-    // </svg>
   );
 }
 
@@ -130,11 +126,15 @@ export default function drawLines({
   modelOutputContainerElem,
   rtaOutputContainerElem,
   connections,
+  weights1,
+  weights2,
 }: {
   inputContainerElem: HTMLElement;
   modelOutputContainerElem: HTMLElement;
   rtaOutputContainerElem: HTMLElement;
   connections: Connection;
+  weights1: number[];
+  weights2: number[][];
 }) {
   resetColors({
     inputContainerElem,
@@ -151,14 +151,13 @@ export default function drawLines({
   }
   const elems: any[] = [];
   const inputElem = inputContainerElem.children[connections.pos] as HTMLElement;
-  inputElem.style.backgroundColor = "red";
-
+  inputElem.style.backgroundColor = "#0060ff";
   connections.modelOutputs.forEach((modelOutput) => {
     const fromElem = inputElem as HTMLElement;
     const toElem = modelOutputContainerElem.children[
       modelOutput.pos
     ] as HTMLElement;
-    toElem.style.backgroundColor = "red";
+    toElem.style.backgroundColor = getColors(weights1[modelOutput.pos]);
     elems.push(
       connect({
         elem1: fromElem,
@@ -172,7 +171,9 @@ export default function drawLines({
         modelOutput.pos
       ] as HTMLElement;
       const toElem = rtaOutputContainerElem.children[p] as HTMLElement;
-      toElem.style.backgroundColor = "red";
+
+      toElem.style.backgroundColor = getColors(weights2[modelOutput.pos][p]);
+
       elems.push(
         connect({
           elem1: fromElem,

@@ -4,7 +4,6 @@ import getRelations from "./getRelations";
 
 export default function createEdges(schema: DatabaseSchemaModel): Edge[] {
   const relations = getRelations(schema);
-  console.log(relations);
   const edges = relations.map((relation) => ({
     id: `${relation.from.column}-${relation.to.column}`,
     source: relation.from.table,
