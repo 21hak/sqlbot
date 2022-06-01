@@ -39,6 +39,8 @@ const Wrapper = styled(Box)`
     stroke-width: 3;
     stroke: red;
   }
+  padding: 16px;
+  touch-action: pinch-zoom;
 `;
 
 const BeamSearchHistory: FC<BeamSearchHistoryProps> =
@@ -61,9 +63,6 @@ const BeamSearchHistory: FC<BeamSearchHistoryProps> =
     };
 
     return (
-      // <Box
-      //   sx={{ width: "100%", height: "100%", position: "relative" }}
-      //   ref={wrapperRef}>
       <Wrapper ref={wrapperRef}>
         {convertedData && (
           <Tree
@@ -87,12 +86,12 @@ const BeamSearchHistory: FC<BeamSearchHistoryProps> =
         {position && (
           <Box
             sx={{
-              width: 100,
-              height: 100,
               position: "absolute",
               top: position.top,
               left: position.left,
               pointerEvents: "none",
+              backgroundColor: "white",
+              p: 1,
             }}>
             {position.score}
           </Box>

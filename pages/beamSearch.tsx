@@ -7,8 +7,6 @@ import BeamSearchHistory from "../src/components/BeamSearchHistory";
 const BeamSearchPage: NextPage = () => {
   return (
     <Box sx={{ display: "flex" }}>
-      {/* TODO: Layout */}
-
       <Box
         component="main"
         sx={{

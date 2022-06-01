@@ -31,7 +31,7 @@ const Candidates: FC<CandidatesProps> = function Candidates({}) {
   return (
     <Box>
       {/* Natural Language */}
-      <Typography variant="body1" sx={{ p: 1 }}>
+      <Typography variant="body1" sx={{ pb: 1 }}>
         Original Natural Language Query
       </Typography>
 
@@ -56,8 +56,7 @@ const Candidates: FC<CandidatesProps> = function Candidates({}) {
         </Paper>
       )}
 
-      {/* Replacement */}
-      <Typography variant="body1" sx={{ p: 1 }}>
+      <Typography variant="body1" sx={{ pb: 1, pt: 1 }}>
         Possible Replacements
       </Typography>
       {data && tokenIndex !== undefined && tokenIndex > -1 && (
@@ -66,7 +65,7 @@ const Candidates: FC<CandidatesProps> = function Candidates({}) {
             <ListItem key={index} sx={{ p: 0 }}>
               <ListItemButton
                 key={index}
-                sx={{ p: 0 }}
+                sx={{ p: 0, pl: 1, pr: 1 }}
                 selected={s === candidate}
                 onClick={() => {
                   handleClickCandidate(s);

@@ -7,8 +7,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import React, { FC, useState } from "react";
 import { useRecoilState } from "recoil";
-import { SchemaLinkModel } from "../../lib/models";
 import { schemaLinkState } from "../../atoms";
+import { SchemaLinkModel } from "../../lib/models";
 
 const drawerWidth: number = 240;
 
@@ -21,7 +21,7 @@ interface SideBarProps {
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  marginTop: 112,
+  marginTop: 70,
   "& .MuiDrawer-paper": {
     position: "relative",
     whiteSpace: "nowrap",

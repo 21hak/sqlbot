@@ -29,7 +29,7 @@ interface SchemaProps {
   attentionWeight?: AttentionWeightModel;
 }
 
-const LastPage: FC<SchemaProps> = function ({ attentionWeight }) {
+const Schema: FC<SchemaProps> = function ({ attentionWeight }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [bgColor, setBgColor] = useState(initBgColor);
@@ -42,7 +42,6 @@ const LastPage: FC<SchemaProps> = function ({ attentionWeight }) {
       const tableTree = createTableTree(tables, data);
       const nodes = createNodes(tableTree);
       setNodes(nodes);
-
       const edges = createEdges(data);
       setEdges(edges);
     }
@@ -84,4 +83,4 @@ const LastPage: FC<SchemaProps> = function ({ attentionWeight }) {
   );
 };
 
-export default LastPage;
+export default Schema;
