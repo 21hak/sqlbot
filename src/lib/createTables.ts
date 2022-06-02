@@ -1,7 +1,8 @@
-import { DBScheme } from "../components/Scheme/utils/type";
-import { ColumnModel, TableModel } from "./models";
+import { ColumnModel, DatabaseSchemaModel, TableModel } from "./models";
 
-export default function createTables(dbScheme: DBScheme): TableModel[] {
+export default function createTables(
+  dbScheme: DatabaseSchemaModel
+): TableModel[] {
   return dbScheme.tableNamesOriginal.map((tableName, index) => {
     const p = dbScheme.columnNamesOriginal[dbScheme.primaryKeys[index]][1];
     const cols: ColumnModel[] = [];

@@ -1,5 +1,4 @@
-import { TableModel } from "../../lib/models";
-import { DBScheme } from "../Scheme/utils/type";
+import { DatabaseSchemaModel, TableModel } from "../../lib/models";
 import getRelations from "./getRelations";
 
 export interface TreeNode {
@@ -12,7 +11,7 @@ export type TableTree = TreeNode[];
 
 export default function createTableTree(
   tables: TableModel[],
-  schema: DBScheme
+  schema: DatabaseSchemaModel
 ) {
   const roots = [] as TreeNode[];
   const entries: TreeNode[] = tables.map((t, index) => ({
