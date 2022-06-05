@@ -1,10 +1,15 @@
-import { Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
 import type { NextPage } from "next";
 import React from "react";
+import { useRecoilState } from "recoil";
+import { beamSearchNaturalLanguage, naturalLanguageState } from "../src/atoms";
 import BeamSearchHistory from "../src/components/BeamSearchHistory";
+import SubHeader from "../src/components/SubHeader/SubHeader";
 
 const BeamSearchPage: NextPage = () => {
+  const [naturalLanguage, setNaturalLanguage] = useRecoilState(
+  naturalLanguageState
+  );
   return (
     <Box sx={{ display: "flex" }}>
       <Box
@@ -18,7 +23,7 @@ const BeamSearchPage: NextPage = () => {
           height: "100vh",
           overflow: "auto",
         }}>
-        <Toolbar />
+        <SubHeader setNaturalLanguage={setNaturalLanguage} />
         <Box sx={{ width: "100%", height: "100%" }}>
           <BeamSearchHistory />
         </Box>

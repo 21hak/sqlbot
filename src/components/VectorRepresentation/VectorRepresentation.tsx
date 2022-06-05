@@ -2,7 +2,7 @@ import { Box, List, ListItem, ListItemText } from "@mui/material";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useLanugageModelTemp } from "../../apis/hooks";
-import { candidateState, dependencyNaturalLanguage } from "../../atoms";
+import { candidateState, naturalLanguageState } from "../../atoms";
 import drawLines from "./drawLines";
 import { Connection } from "./type";
 
@@ -13,9 +13,8 @@ const VectorRepresentation: FC<VectorRepresentationProps> =
     // const { data } = useLanugageModel();
     const candidate = useRecoilValue(candidateState);
 
-    const [naturalLanguage, setNaturalLanguage] = useRecoilState(
-      dependencyNaturalLanguage
-    );
+    const [naturalLanguage, setNaturalLanguage] =
+      useRecoilState(naturalLanguageState);
     const { data } = useLanugageModelTemp({
       nl: naturalLanguage,
       enabled: !!naturalLanguage,

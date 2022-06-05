@@ -2,7 +2,9 @@ import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import React, { FC, useMemo, useRef, useState } from "react";
 import Tree from "react-d3-tree";
-import { useBeamSearchHistoryModel } from "../../apis/hooks";
+import { useRecoilState } from "recoil";
+import { useBeamSearchHistoryModelTemp } from "../../apis/hooks";
+import { beamSearchNaturalLanguage, naturalLanguageState } from "../../atoms";
 
 interface BeamSearchHistoryProps {}
 
@@ -39,17 +41,24 @@ const Wrapper = styled(Box)`
     stroke-width: 3;
     stroke: red;
   }
-  padding: 16px;
+
   touch-action: pinch-zoom;
 `;
 
 const BeamSearchHistory: FC<BeamSearchHistoryProps> =
   function BeamSearchHistory() {
+    const [naturalLanguage, setNaturalLanguage] = useRecoilState(
+      naturalLanguageState
+    );
     const wrapperRef = useRef<HTMLDivElement>(null);
     const [position, setPosition] = useState<
       { left: number; top: number; score: number } | undefined
     >();
-    const { data } = useBeamSearchHistoryModel();
+    const { data } = useBeamSearchHistoryModelTemp({
+      nl: naturalLanguage,
+      enabled: !!naturalLanguage,
+    });
+
     const convertedData = useMemo(
       () => data && renameKeys(data, { choice: "name", next: "children" }),
       [data]

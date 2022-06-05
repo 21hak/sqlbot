@@ -5,15 +5,17 @@ import { Control, Controller } from "react-hook-form";
 interface FormInputTextProps {
   name: string;
   control: Control;
+  defaultValue?: string;
 }
 
 const FormInputText: FC<FormInputTextProps> = function FormInputText({
   name,
   control,
+  defaultValue = "",
 }) {
   return (
     <Controller
-      defaultValue=""
+      defaultValue={defaultValue}
       name={name}
       control={control}
       render={({ field: { onChange, value } }) => (

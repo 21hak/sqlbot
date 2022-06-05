@@ -11,14 +11,15 @@ import React, { FC } from "react";
 interface DropdownProps {
   items: string[];
   label?: string;
+  initialItem?: string;
   onSelect: (item: string) => void;
 }
 const Dropdown: FC<DropdownProps> = function Dropdown({
   items,
   label,
-  onSelect,
+  onSelect,initialItem
 }) {
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState(initialItem);
 
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value as string);

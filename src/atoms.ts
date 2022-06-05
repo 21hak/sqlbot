@@ -37,3 +37,13 @@ export const dependencyNaturalLanguage = atom<string>({
   key: "dependency-nl",
   default: "",
 });
+
+export const beamSearchNaturalLanguage = atom<string>({
+  key: "beamSearch-nl",
+  default: "",
+});
+
+export const naturalLanguageState = atom<string>({
+  key: "nl",
+  default: "",
+});

@@ -16,6 +16,7 @@ import { useCandidatesTemp } from "../../apis/hooks";
 import {
   candidateState,
   dependencyNaturalLanguage,
+  naturalLanguageState,
   tokenState,
 } from "../../atoms";
 import FormInputText from "../FormInputText/FormInputText";
@@ -24,7 +25,7 @@ interface CandidatesProps {}
 
 const Candidates: FC<CandidatesProps> = function Candidates({}) {
   const [naturalLanguage, setNaturalLanguage] = useRecoilState(
-    dependencyNaturalLanguage
+    naturalLanguageState
   );
 
   const { data } = useCandidatesTemp({
@@ -50,10 +51,10 @@ const Candidates: FC<CandidatesProps> = function Candidates({}) {
 
   return (
     <Box>
-      <Typography variant="body1" sx={{ pb: 1 }}>
+      {/* <Typography variant="body1" sx={{ pb: 1 }}>
         Natural Language
-      </Typography>
-      <Paper
+      </Typography> */}
+      {/* <Paper
         onSubmit={handleSubmit(onSubmit)}
         component="form"
         sx={{
@@ -65,7 +66,7 @@ const Candidates: FC<CandidatesProps> = function Candidates({}) {
         <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
           <SearchIcon />
         </IconButton>
-      </Paper>
+      </Paper> */}
 
       {/* Natural Language */}
       <Typography variant="body1" sx={{ pb: 1 }}>

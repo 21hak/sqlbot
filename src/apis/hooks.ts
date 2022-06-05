@@ -170,3 +170,22 @@ export const useBeamSearchHistoryModel = () => {
   );
   return rst;
 };
+
+export const useBeamSearchHistoryModelTemp = ({
+  nl,
+  enabled,
+}: {
+  nl: string;
+  enabled: boolean;
+}) => {
+  const rst = useQuery<BeamSearchHistoryModel>(
+    ["/beam-search-history-model", nl],
+    () => getBeanSearchHisotry(),
+    {
+      enabled: enabled,
+      refetchOnWindowFocus: false,
+      refetchOnMount: true,
+    }
+  );
+  return rst;
+};

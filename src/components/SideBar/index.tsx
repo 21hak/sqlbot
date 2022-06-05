@@ -1,28 +1,17 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import SearchIcon from "@mui/icons-material/Search";
-import {
-  Divider,
-  IconButton,
-  List,
-  Paper,
-  styled,
-  Toolbar,
-} from "@mui/material";
+import { Divider, List, styled } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import React, { FC, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { useSchemaLinksTemp } from "../../apis/hooks";
 import {
   databaseState,
+  naturalLanguageState,
   schemaLinkState,
-  schemaNaturalLanguage,
 } from "../../atoms";
-import Dropdown from "../Dropdown/Dropdown";
-import FormInputText from "../FormInputText/FormInputText";
 
 const drawerWidth: number = 240;
 
@@ -34,7 +23,7 @@ interface SideBarProps {
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  marginTop: 70,
+  // marginTop: 70,
   "& .MuiDrawer-paper": {
     position: "relative",
     whiteSpace: "nowrap",
@@ -65,49 +54,15 @@ const SideBar: FC<SideBarProps> = function SideBar({ setSelected, selected }) {
   };
   const [schemaLink, setSchemaLink] = useRecoilState(schemaLinkState);
   const [database, setDatabase] = useRecoilState(databaseState);
-  const [naturalLanguage, setNaturalLanguage] = useRecoilState(
-    schemaNaturalLanguage
-  );
+  const [naturalLanguage, setNaturalLanguage] =
+    useRecoilState(naturalLanguageState);
   const { data: schemaLinks } = useSchemaLinksTemp({
     naturalLanguage: naturalLanguage,
     enabled: !!naturalLanguage,
   });
-  const { handleSubmit, reset, control } = useForm();
-  const onSubmit = (data: any) => {
-    setNaturalLanguage(data.sql);
-  };
 
   return (
-    <Drawer variant="permanent" open={open}>
-      <Toolbar
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          flexDirection: "column",
-          px: [1],
-          mt: 2,
-        }}>
-        <Dropdown
-          items={["default"]}
-          label={"database"}
-          onSelect={setDatabase}
-        />
-        <Paper
-          onSubmit={handleSubmit(onSubmit)}
-          component="form"
-          sx={{
-            mt: 1,
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-          }}>
-          <FormInputText name="sql" control={control} />
-          <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-      </Toolbar>
+    <Drawer variant="permanent" open={!!schemaLinks}>
       <Divider />
       <List component="nav">
         {schemaLinks &&
