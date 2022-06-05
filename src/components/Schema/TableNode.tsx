@@ -4,7 +4,7 @@ import { Handle, Position } from "react-flow-renderer";
 import { useRecoilValue } from "recoil";
 import ForeignKeyIcon from "../../../public/foreign-key.svg";
 import PrimaryKeyIcon from "../../../public/primary-key.svg";
-import { schemaLinkState } from "../../atoms";
+import { attentionWeightState, schemaLinkState } from "../../atoms";
 import getColors from "../../lib/getColor";
 import { TableModel } from "../../lib/models";
 import { attentionWeightByTable } from "../../selectors";
@@ -18,9 +18,10 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
   function TableNode({ data, isConnectable }) {
     const { table } = data;
     const { name, columns } = table;
-    const attentionWeight = useRecoilValue(attentionWeightByTable(name));
-    const schemaLink = useRecoilValue(schemaLinkState);
 
+    const schemaLink = useRecoilValue(schemaLinkState);
+    const attentionWeight = useRecoilValue(attentionWeightByTable(name));
+    const at = useRecoilValue(attentionWeightState);
     const [weightVisible, setWeightVisible] = useState(false);
     const handleMouseEnter = () => {
       setWeightVisible(true);
@@ -47,7 +48,7 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
           }}>
           {name}
         </Box>
-        <Box sx={{ p: 0, paddingBottom: "16px" }}>
+        <Box sx={{ p: 0, paddingBottom: "16px", margin: "0 8px" }}>
           {columns.map((column, index) => (
             <Box
               id={`${name}-${column.name}`}
@@ -58,6 +59,7 @@ const TableNode: FC<{ data: TableNodeProps; isConnectable: boolean }> =
                 justifyContent: "space-between",
                 position: "relative",
                 padding: "0 24px 0 24px",
+
                 backgroundColor: getColors(
                   attentionWeight.weights.find((w) => w.key === column.name)
                     ?.weight ?? 1

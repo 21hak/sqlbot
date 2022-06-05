@@ -49,6 +49,7 @@ const SubHeader: FC<SubHeaderProps> = function SubHeader({ children }) {
           name="sql"
           control={control}
           defaultValue={naturalLanguage}
+          placeholder="Search"
         />
         <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
           <SearchIcon />

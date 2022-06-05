@@ -51,7 +51,7 @@ const SideBar: FC<SideBarProps> = function SideBar({}) {
   const { data: attentionWeightsData } = useAttentionWeights({
     token: schemaLink.word,
     database: database,
-    enabled: !!schemaLink.word && !!database,
+    enabled: !!schemaLink && !!database,
   });
   const setAttentionWeight = useSetRecoilState(attentionWeightState);
   const naturalLanguage = useRecoilValue(naturalLanguageState);
@@ -84,7 +84,6 @@ const SideBar: FC<SideBarProps> = function SideBar({}) {
                 selected={s.word === schemaLink.word}
                 onClick={() => {
                   setSchemaLink(s);
-
                   handleClickToken(i);
                 }}>
                 <ListItemIcon>

@@ -6,12 +6,14 @@ interface FormInputTextProps {
   name: string;
   control: Control;
   defaultValue?: string;
+  placeholder?: string;
 }
 
 const FormInputText: FC<FormInputTextProps> = function FormInputText({
   name,
   control,
   defaultValue = "",
+  placeholder,
 }) {
   return (
     <Controller
@@ -20,9 +22,9 @@ const FormInputText: FC<FormInputTextProps> = function FormInputText({
       control={control}
       render={({ field: { onChange, value } }) => (
         <InputBase
+          placeholder={placeholder}
           type="input"
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Google Maps"
           inputProps={{ "aria-label": "search google maps" }}
           onChange={onChange}
           value={value}

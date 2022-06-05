@@ -1,6 +1,6 @@
 import { selectorFamily } from "recoil";
-import { AttentionWeightModel } from "./lib/models";
 import { attentionWeightState } from "./atoms";
+import { AttentionWeightModel } from "./lib/models";
 
 export const attentionWeightByTable = selectorFamily<
   AttentionWeightModel,
@@ -11,7 +11,6 @@ export const attentionWeightByTable = selectorFamily<
     (tableName: string) =>
     ({ get }) => {
       const attentionWeight = get(attentionWeightState);
-
       return {
         word: attentionWeight.word,
         weights: attentionWeight.weights
