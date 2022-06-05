@@ -29,6 +29,24 @@ export const useDatabaseSchema = () => {
   );
   return rst;
 };
+export const useDatabaseSchemaTemp = ({
+  database,
+  enabled,
+}: {
+  database: string;
+  enabled: boolean;
+}) => {
+  const rst = useQuery<DatabaseSchemaModel>(
+    ["/database", database],
+    () => getDatabaseSchema(),
+    {
+      enabled: enabled,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+    }
+  );
+  return rst;
+};
 
 export const useSchemaLinks = () => {
   const rst = useQuery<SchemaLinkModel[]>(
@@ -37,6 +55,25 @@ export const useSchemaLinks = () => {
     {
       staleTime: Infinity,
       enabled: true,
+      refetchOnWindowFocus: false,
+      refetchOnMount: true,
+    }
+  );
+  return rst;
+};
+
+export const useSchemaLinksTemp = ({
+  naturalLanguage,
+  enabled,
+}: {
+  naturalLanguage: string;
+  enabled: boolean;
+}) => {
+  const rst = useQuery<SchemaLinkModel[]>(
+    ["/schema-links", naturalLanguage],
+    () => getSchemaLinks(),
+    {
+      enabled: enabled,
       refetchOnWindowFocus: false,
       refetchOnMount: true,
     }

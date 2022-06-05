@@ -10,14 +10,14 @@ const Schema = dynamic(() => import("../src/components/Schema"), {
 });
 
 const SchemaPage: NextPage = () => {
-  const { data: schemaLinksData } = useSchemaLinks();
+  
   const { data: attentionWeightsData } = useAttentionWeights();
   const [selected, setSelected] = useState<number>();
 
   return (
     <Box sx={{ display: "flex" }}>
       <SideBar
-        schemaLinks={schemaLinksData ?? []}
+        
         setSelected={setSelected}
         selected={selected}
       />

@@ -23,6 +23,16 @@ export const tokenState = atom<string>({
   default: "",
 });
 
+export const schemaNaturalLanguage = atom<string>({
+  key: "schema-nl",
+  default: "",
+});
+
+export const databaseState = atom<string>({
+  key: "database",
+  default: "",
+});
+
 export const dependencyNaturalLanguage = atom<string>({
   key: "dependency-nl",
   default: "",

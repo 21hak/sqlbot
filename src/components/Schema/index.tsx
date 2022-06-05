@@ -4,9 +4,9 @@ import ReactFlow, {
   useEdgesState,
   useNodesState,
 } from "react-flow-renderer";
-import { useSetRecoilState } from "recoil";
-import { useDatabaseSchema } from "../../apis/hooks";
-import { attentionWeightState } from "../../atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { useDatabaseSchemaTemp } from "../../apis/hooks";
+import { attentionWeightState, databaseState } from "../../atoms";
 import createTables from "../../lib/createTables";
 import { AttentionWeightModel } from "../../lib/models";
 import createEdges from "./createEdges";
@@ -28,11 +28,16 @@ interface SchemaProps {
 }
 
 const Schema: FC<SchemaProps> = function ({ attentionWeight }) {
+  const [database, setDatabase] = useRecoilState(databaseState);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [bgColor, setBgColor] = useState(initBgColor);
   const setAttentionWeight = useSetRecoilState(attentionWeightState);
-  const { data } = useDatabaseSchema();
+  // const { data } = useDatabaseSchema();
+  const { data } = useDatabaseSchemaTemp({
+    database: database,
+    enabled: !!database,
+  });
 
   useEffect(() => {
     if (data) {
