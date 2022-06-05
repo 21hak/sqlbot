@@ -1,6 +1,4 @@
-import { Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
@@ -34,22 +32,13 @@ const SchemaPage: NextPage = () => {
           height: "100vh",
           overflow: "auto",
         }}>
-        <Toolbar />
-        <Container
-          maxWidth="lg"
-          sx={{
-            width: "100%",
-            height: "100%",
-            overflow: "auto",
-          }}>
-          <Schema
-            attentionWeight={
-              attentionWeightsData && selected
-                ? attentionWeightsData[selected]
-                : undefined
-            }
-          />
-        </Container>
+        <Schema
+          attentionWeight={
+            attentionWeightsData && selected
+              ? attentionWeightsData[selected]
+              : undefined
+          }
+        />
       </Box>
     </Box>
   );

@@ -22,3 +22,8 @@ export const tokenState = atom<string>({
   key: "token",
   default: "",
 });
+
+export const dependencyNaturalLanguage = atom<string>({
+  key: "dependency-nl",
+  default: "",
+});

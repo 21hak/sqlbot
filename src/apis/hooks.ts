@@ -68,6 +68,25 @@ export const useCandidates = () => {
   return rst;
 };
 
+export const useCandidatesTemp = ({
+  naturalLanguage,
+  enabled,
+}: {
+  naturalLanguage: string;
+  enabled: boolean;
+}) => {
+  const rst = useQuery<CandidateModel>(
+    ["/candidates", naturalLanguage],
+    () => getCandidates(),
+    {
+      enabled: enabled,
+      refetchOnWindowFocus: false,
+      refetchOnMount: true,
+    }
+  );
+  return rst;
+};
+
 export const useLanugageModel = () => {
   const rst = useQuery<LanguageModelOutputModel>(
     ["/language-model"],
@@ -75,6 +94,25 @@ export const useLanugageModel = () => {
     {
       staleTime: Infinity,
       enabled: true,
+      refetchOnWindowFocus: false,
+      refetchOnMount: true,
+    }
+  );
+  return rst;
+};
+
+export const useLanugageModelTemp = ({
+  nl,
+  enabled,
+}: {
+  nl: string;
+  enabled: boolean;
+}) => {
+  const rst = useQuery<LanguageModelOutputModel>(
+    ["/language-model", nl],
+    () => getLanguageModel(),
+    {
+      enabled: enabled,
       refetchOnWindowFocus: false,
       refetchOnMount: true,
     }

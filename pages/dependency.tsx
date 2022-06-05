@@ -2,8 +2,11 @@ import Box from "@mui/material/Box";
 import { NextPage } from "next";
 import Candidates from "../src/components/Candidates/Candidates";
 import VectorRepresentation from "../src/components/VectorRepresentation/VectorRepresentation";
-// https://stackoverflow.com/questions/8672369/how-to-draw-a-line-between-two-divs
+
 const Page: NextPage = () => {
+  // const [candidates, setCandidates] = useState()
+  // const { data } = useCandidates();
+
   return (
     <Box
       component="main"
@@ -20,18 +23,8 @@ const Page: NextPage = () => {
       <Box sx={{ width: "40%", height: "100%", p: 1 }}>
         <Candidates />
       </Box>
-      {/* Representation */}
 
       <Box sx={{ width: "60%", height: "100%", p: 1, position: "relative" }}>
-        {/* <div
-          id="test"
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            pointerEvents: "none",
-          }}></div> */}
-        {/* <Box sx={{ width: "100%", height: "100%", position: "absolute" }} /> */}
         <VectorRepresentation />
       </Box>
     </Box>

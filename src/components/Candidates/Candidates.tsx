@@ -1,5 +1,7 @@
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -8,15 +10,28 @@ import {
   Typography,
 } from "@mui/material";
 import React, { FC } from "react";
+import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { useCandidates } from "../../apis/hooks";
-import { candidateState, tokenState } from "../../atoms";
+import { useCandidatesTemp } from "../../apis/hooks";
+import {
+  candidateState,
+  dependencyNaturalLanguage,
+  tokenState,
+} from "../../atoms";
+import FormInputText from "../FormInputText/FormInputText";
 
 interface CandidatesProps {}
 
 const Candidates: FC<CandidatesProps> = function Candidates({}) {
-  const { data } = useCandidates();
-  // const [index, setIndex] = useState<number>();
+  const [naturalLanguage, setNaturalLanguage] = useRecoilState(
+    dependencyNaturalLanguage
+  );
+
+  const { data } = useCandidatesTemp({
+    naturalLanguage,
+    enabled: !!naturalLanguage,
+  });
+
   const [candidate, setCandidate] = useRecoilState(candidateState);
   const [token, setToken] = useRecoilState(tokenState);
   const tokenIndex = data?.words.findIndex((w) => w === token);
@@ -28,15 +43,39 @@ const Candidates: FC<CandidatesProps> = function Candidates({}) {
     setCandidate(c);
   };
 
+  const { handleSubmit, reset, control } = useForm();
+  const onSubmit = (data: any) => {
+    setNaturalLanguage(data.sql);
+  };
+
   return (
     <Box>
+      <Typography variant="body1" sx={{ pb: 1 }}>
+        Natural Language
+      </Typography>
+      <Paper
+        onSubmit={handleSubmit(onSubmit)}
+        component="form"
+        sx={{
+          p: "2px 4px",
+          display: "flex",
+          alignItems: "center",
+        }}>
+        <FormInputText name="sql" control={control} />
+        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+          <SearchIcon />
+        </IconButton>
+      </Paper>
+
       {/* Natural Language */}
       <Typography variant="body1" sx={{ pb: 1 }}>
         Original Natural Language Query
       </Typography>
 
       {data && (
-        <Paper variant="outlined" sx={{ p: 1 }}>
+        <Paper
+          variant="outlined"
+          sx={{ p: 1, display: "flex", flexWrap: "wrap" }}>
           {data.words.map((word, i) => (
             <Typography
               key={i}
