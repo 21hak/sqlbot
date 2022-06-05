@@ -16,20 +16,7 @@ import {
   getSchemaLinks,
 } from "./fetch";
 
-export const useDatabaseSchema = () => {
-  const rst = useQuery<DatabaseSchemaModel>(
-    ["/database"],
-    () => getDatabaseSchema(),
-    {
-      staleTime: Infinity,
-      enabled: true,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-    }
-  );
-  return rst;
-};
-export const useDatabaseSchemaTemp = ({
+export const useDatabaseSchema = ({
   database,
   enabled,
 }: {
@@ -48,29 +35,17 @@ export const useDatabaseSchemaTemp = ({
   return rst;
 };
 
-export const useSchemaLinks = () => {
-  const rst = useQuery<SchemaLinkModel[]>(
-    ["/schema-links"],
-    () => getSchemaLinks(),
-    {
-      staleTime: Infinity,
-      enabled: true,
-      refetchOnWindowFocus: false,
-      refetchOnMount: true,
-    }
-  );
-  return rst;
-};
-
-export const useSchemaLinksTemp = ({
+export const useSchemaLinks = ({
   naturalLanguage,
+  database,
   enabled,
 }: {
   naturalLanguage: string;
+  database: string;
   enabled: boolean;
 }) => {
   const rst = useQuery<SchemaLinkModel[]>(
-    ["/schema-links", naturalLanguage],
+    ["/schema-links", naturalLanguage, database],
     () => getSchemaLinks(),
     {
       enabled: enabled,
@@ -81,13 +56,20 @@ export const useSchemaLinksTemp = ({
   return rst;
 };
 
-export const useAttentionWeights = () => {
+export const useAttentionWeights = ({
+  token,
+  database,
+  enabled,
+}: {
+  token: string;
+  database: string;
+  enabled: boolean;
+}) => {
   const rst = useQuery<AttentionWeightModel[]>(
-    ["/attenion-weights"],
+    ["/attenion-weights", token, database],
     () => getAttentionWeights(),
     {
-      staleTime: Infinity,
-      enabled: true,
+      enabled: enabled,
       refetchOnWindowFocus: false,
       refetchOnMount: true,
     }
@@ -95,25 +77,17 @@ export const useAttentionWeights = () => {
   return rst;
 };
 
-export const useCandidates = () => {
-  const rst = useQuery<CandidateModel>(["/candidates"], () => getCandidates(), {
-    staleTime: Infinity,
-    enabled: true,
-    refetchOnWindowFocus: false,
-    refetchOnMount: true,
-  });
-  return rst;
-};
-
-export const useCandidatesTemp = ({
+export const useCandidates = ({
   naturalLanguage,
+  database,
   enabled,
 }: {
   naturalLanguage: string;
+  database: string;
   enabled: boolean;
 }) => {
   const rst = useQuery<CandidateModel>(
-    ["/candidates", naturalLanguage],
+    ["/candidates", naturalLanguage, database],
     () => getCandidates(),
     {
       enabled: enabled,
@@ -124,29 +98,17 @@ export const useCandidatesTemp = ({
   return rst;
 };
 
-export const useLanugageModel = () => {
-  const rst = useQuery<LanguageModelOutputModel>(
-    ["/language-model"],
-    () => getLanguageModel(),
-    {
-      staleTime: Infinity,
-      enabled: true,
-      refetchOnWindowFocus: false,
-      refetchOnMount: true,
-    }
-  );
-  return rst;
-};
-
-export const useLanugageModelTemp = ({
+export const useLanugageModel = ({
   nl,
+  database,
   enabled,
 }: {
   nl: string;
+  database: string;
   enabled: boolean;
 }) => {
   const rst = useQuery<LanguageModelOutputModel>(
-    ["/language-model", nl],
+    ["/language-model", nl, database],
     () => getLanguageModel(),
     {
       enabled: enabled,
@@ -157,29 +119,17 @@ export const useLanugageModelTemp = ({
   return rst;
 };
 
-export const useBeamSearchHistoryModel = () => {
-  const rst = useQuery<BeamSearchHistoryModel>(
-    ["/beam-search-history-model"],
-    () => getBeanSearchHisotry(),
-    {
-      staleTime: Infinity,
-      enabled: true,
-      refetchOnWindowFocus: false,
-      refetchOnMount: true,
-    }
-  );
-  return rst;
-};
-
-export const useBeamSearchHistoryModelTemp = ({
+export const useBeamSearchHistoryModel = ({
   nl,
+  database,
   enabled,
 }: {
   nl: string;
+  database: string;
   enabled: boolean;
 }) => {
   const rst = useQuery<BeamSearchHistoryModel>(
-    ["/beam-search-history-model", nl],
+    ["/beam-search-history-model", nl, database],
     () => getBeanSearchHisotry(),
     {
       enabled: enabled,

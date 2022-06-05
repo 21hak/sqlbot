@@ -1,18 +1,10 @@
+import Candidates from "@/components/Candidates/Candidates";
+import SubHeader from "@/components/SubHeader/SubHeader";
+import VectorRepresentation from "@/components/VectorRepresentation/VectorRepresentation";
 import Box from "@mui/material/Box";
 import { NextPage } from "next";
-import { useRecoilState } from "recoil";
-import { dependencyNaturalLanguage, naturalLanguageState } from "../src/atoms";
-import Candidates from "../src/components/Candidates/Candidates";
-import SubHeader from "../src/components/SubHeader/SubHeader";
-import VectorRepresentation from "../src/components/VectorRepresentation/VectorRepresentation";
 
 const Page: NextPage = () => {
-  const [naturalLanguage, setNaturalLanguage] = useRecoilState(
-    naturalLanguageState
-  );
-  // const [candidates, setCandidates] = useState()
-  // const { data } = useCandidates();
-
   return (
     <Box
       component="main"
@@ -20,7 +12,7 @@ const Page: NextPage = () => {
         height: "100vh",
         overflow: "auto",
       }}>
-      <SubHeader setNaturalLanguage={setNaturalLanguage} />
+      <SubHeader />
       <Box
         sx={{
           display: "flex",

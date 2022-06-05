@@ -1,8 +1,12 @@
 import { Box, List, ListItem, ListItemText } from "@mui/material";
 import React, { FC, useEffect, useRef, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { useLanugageModelTemp } from "../../apis/hooks";
-import { candidateState, naturalLanguageState } from "../../atoms";
+import { useRecoilValue } from "recoil";
+import { useLanugageModel } from "../../apis/hooks";
+import {
+  candidateState,
+  databaseState,
+  naturalLanguageState,
+} from "../../atoms";
 import drawLines from "./drawLines";
 import { Connection } from "./type";
 
@@ -10,14 +14,13 @@ interface VectorRepresentationProps {}
 
 const VectorRepresentation: FC<VectorRepresentationProps> =
   function VectorRepresentation({}) {
-    // const { data } = useLanugageModel();
+    const database = useRecoilValue(databaseState);
     const candidate = useRecoilValue(candidateState);
-
-    const [naturalLanguage, setNaturalLanguage] =
-      useRecoilState(naturalLanguageState);
-    const { data } = useLanugageModelTemp({
+    const naturalLanguage = useRecoilValue(naturalLanguageState);
+    const { data } = useLanugageModel({
       nl: naturalLanguage,
-      enabled: !!naturalLanguage,
+      database,
+      enabled: !!naturalLanguage && !! database,
     });
     const [inputToken, setInputToken] = useState<string>();
     const [connections, setConnections] = useState<Connection>();

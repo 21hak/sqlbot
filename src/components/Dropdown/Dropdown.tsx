@@ -17,7 +17,8 @@ interface DropdownProps {
 const Dropdown: FC<DropdownProps> = function Dropdown({
   items,
   label,
-  onSelect,initialItem
+  onSelect,
+  initialItem,
 }) {
   const [value, setValue] = React.useState(initialItem);
 
@@ -29,10 +30,9 @@ const Dropdown: FC<DropdownProps> = function Dropdown({
   return (
     <Box sx={{ width: "100%" }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+        <InputLabel id="db-dropdwon-label">{label}</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          id="db-dropdwon"
           value={value}
           label={label}
           onChange={handleChange}>

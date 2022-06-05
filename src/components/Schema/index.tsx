@@ -1,14 +1,13 @@
+import { useDatabaseSchema } from "@/apis/hooks";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import ReactFlow, {
   addEdge,
   useEdgesState,
   useNodesState,
 } from "react-flow-renderer";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { useDatabaseSchemaTemp } from "../../apis/hooks";
-import { attentionWeightState, databaseState } from "../../atoms";
+import { useRecoilValue } from "recoil";
+import { databaseState } from "../../atoms";
 import createTables from "../../lib/createTables";
-import { AttentionWeightModel } from "../../lib/models";
 import createEdges from "./createEdges";
 import createNodes from "./createNodes";
 import createTableTree from "./createTableTree";
@@ -24,17 +23,16 @@ const nodeTypes = {
 };
 
 interface SchemaProps {
-  attentionWeight?: AttentionWeightModel;
+  // attentionWeight?: AttentionWeightModel;
 }
 
-const Schema: FC<SchemaProps> = function ({ attentionWeight }) {
-  const [database, setDatabase] = useRecoilState(databaseState);
+const Schema: FC<SchemaProps> = function ({}) {
+  const database = useRecoilValue(databaseState);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [bgColor, setBgColor] = useState(initBgColor);
-  const setAttentionWeight = useSetRecoilState(attentionWeightState);
-  // const { data } = useDatabaseSchema();
-  const { data } = useDatabaseSchemaTemp({
+
+  const { data } = useDatabaseSchema({
     database: database,
     enabled: !!database,
   });
@@ -49,17 +47,6 @@ const Schema: FC<SchemaProps> = function ({ attentionWeight }) {
       setEdges(edges);
     }
   }, [data]);
-
-  useEffect(() => {
-    if (attentionWeight && nodes) {
-      setAttentionWeight({
-        word: attentionWeight.word,
-        weights: attentionWeight.weights.map((f) => {
-          return { key: f.key, weight: f.weight };
-        }),
-      });
-    }
-  }, [attentionWeight, nodes]);
 
   const onConnect = useCallback(
     (params) =>

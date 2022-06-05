@@ -11,16 +11,12 @@ import FormInputText from "../FormInputText/FormInputText";
 
 const SubHeaderWrapper = styled(MuiToolBar)<ToolbarProps>(({}) => ({
   backgroundColor: "white",
+  alignItems: "stretch",
 }));
 
-interface SubHeaderProps {
-  setNaturalLanguage: (s: string) => void;
-}
+interface SubHeaderProps {}
 
-const SubHeader: FC<SubHeaderProps> = function SubHeader({
-  //   setNaturalLanguage,
-  children,
-}) {
+const SubHeader: FC<SubHeaderProps> = function SubHeader({ children }) {
   const [database, setDatabase] = useRecoilState(databaseState);
   const [naturalLanguage, setNaturalLanguage] =
     useRecoilState(naturalLanguageState);

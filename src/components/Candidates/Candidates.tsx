@@ -1,7 +1,5 @@
-import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -10,27 +8,24 @@ import {
   Typography,
 } from "@mui/material";
 import React, { FC } from "react";
-import { useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
-import { useCandidatesTemp } from "../../apis/hooks";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useCandidates } from "../../apis/hooks";
 import {
   candidateState,
-  dependencyNaturalLanguage,
+  databaseState,
   naturalLanguageState,
   tokenState,
 } from "../../atoms";
-import FormInputText from "../FormInputText/FormInputText";
 
 interface CandidatesProps {}
 
 const Candidates: FC<CandidatesProps> = function Candidates({}) {
-  const [naturalLanguage, setNaturalLanguage] = useRecoilState(
-    naturalLanguageState
-  );
-
-  const { data } = useCandidatesTemp({
+  const naturalLanguage = useRecoilValue(naturalLanguageState);
+  const database = useRecoilValue(databaseState);
+  const { data } = useCandidates({
     naturalLanguage,
-    enabled: !!naturalLanguage,
+    database,
+    enabled: !!naturalLanguage && !!database,
   });
 
   const [candidate, setCandidate] = useRecoilState(candidateState);
@@ -44,30 +39,8 @@ const Candidates: FC<CandidatesProps> = function Candidates({}) {
     setCandidate(c);
   };
 
-  const { handleSubmit, reset, control } = useForm();
-  const onSubmit = (data: any) => {
-    setNaturalLanguage(data.sql);
-  };
-
   return (
     <Box>
-      {/* <Typography variant="body1" sx={{ pb: 1 }}>
-        Natural Language
-      </Typography> */}
-      {/* <Paper
-        onSubmit={handleSubmit(onSubmit)}
-        component="form"
-        sx={{
-          p: "2px 4px",
-          display: "flex",
-          alignItems: "center",
-        }}>
-        <FormInputText name="sql" control={control} />
-        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
-          <SearchIcon />
-        </IconButton>
-      </Paper> */}
-
       {/* Natural Language */}
       <Typography variant="body1" sx={{ pb: 1 }}>
         Original Natural Language Query

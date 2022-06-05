@@ -2,9 +2,9 @@ import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import React, { FC, useMemo, useRef, useState } from "react";
 import Tree from "react-d3-tree";
-import { useRecoilState } from "recoil";
-import { useBeamSearchHistoryModelTemp } from "../../apis/hooks";
-import { beamSearchNaturalLanguage, naturalLanguageState } from "../../atoms";
+import { useRecoilValue } from "recoil";
+import { useBeamSearchHistoryModel } from "../../apis/hooks";
+import { databaseState, naturalLanguageState } from "../../atoms";
 
 interface BeamSearchHistoryProps {}
 
@@ -47,16 +47,16 @@ const Wrapper = styled(Box)`
 
 const BeamSearchHistory: FC<BeamSearchHistoryProps> =
   function BeamSearchHistory() {
-    const [naturalLanguage, setNaturalLanguage] = useRecoilState(
-      naturalLanguageState
-    );
+    const naturalLanguage = useRecoilValue(naturalLanguageState);
+    const database = useRecoilValue(databaseState);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const [position, setPosition] = useState<
       { left: number; top: number; score: number } | undefined
     >();
-    const { data } = useBeamSearchHistoryModelTemp({
+    const { data } = useBeamSearchHistoryModel({
       nl: naturalLanguage,
-      enabled: !!naturalLanguage,
+      database,
+      enabled: !!naturalLanguage && !!database,
     });
 
     const convertedData = useMemo(
